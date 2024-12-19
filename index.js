@@ -22,15 +22,15 @@ let player1Score = 0;
 let player2Score = 0;
 let paddleMargin = 10;
 let paddle1 = {
-    width: 25,
+    width: 10,
     height: 100,
     x: paddleMargin,
     y: 0
 };
 let paddle2 = {
-    width: 25,
+    width: 10,
     height: 100,
-    x: gameWidth - paddleMargin - 25,
+    x: gameWidth - paddleMargin - 10,
     y: gameHeight - 100
 };
 
@@ -233,15 +233,15 @@ function resetGame() {
     player1Score = 0;
     player2Score = 0;
     paddle1 = {
-        width: 25,
+        width: 10,
         height: 100,
         x: paddleMargin,
         y: 0
     };
     paddle2 = {
-        width: 25,
+        width: 10,
         height: 100,
-        x: gameWidth - paddleMargin - 25,
+        x: gameWidth - paddleMargin - 10,
         y: gameHeight - 100
     };
     ballSpeed = 1;
