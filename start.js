@@ -41,3 +41,5 @@ const nicknameInput=document.createElement("input")
 nicknameInput.type="text"
 logIn.appendChild(nicknameInput)
 startPage.appendChild(logIn);
+//yegrf
+
