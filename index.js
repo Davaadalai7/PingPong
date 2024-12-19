@@ -8,9 +8,9 @@ const boardBackground = "black";
 const paddle1Color = "lightblue";
 const paddle2Color = "red";
 const paddleBorder = "black";
-const ballColor = "yellow";
+const ballColor = "blue"; // Ball color is now blue
+const shadowColor = "red"; // Shadow color is now red
 const ballRadius = 12.5;
-// const paddleSpeed = 50;
 let intervalID;
 let ballSpeed;
 let ballX = gameWidth / 2;
@@ -32,8 +32,6 @@ let paddle2 = {
   x: gameWidth - paddleMargin - 10,
   y: gameHeight - 100,
 };
-
-// Trail array to store previous ball positions
 let ballTrail = [];
 
 window.addEventListener("keydown", changeDirection);
@@ -51,7 +49,7 @@ function nextTick() {
     clearBoard();
     drawPaddles();
     moveBall();
-    drawBall(ballX, ballY); // Draw ball and trail
+    drawBall(ballX, ballY);
     checkCollision();
     nextTick();
   }, 10);
@@ -64,7 +62,6 @@ function clearBoard() {
 
 function drawPaddles() {
   ctx.strokeStyle = paddleBorder;
-
   ctx.fillStyle = paddle1Color;
   ctx.fillRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
   ctx.strokeRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
@@ -88,38 +85,32 @@ function createBall() {
   }
   ballX = gameWidth / 2;
   ballY = gameHeight / 2;
-  console.log("Ball created at:", ballX, ballY); // Debugging line
   drawBall(ballX, ballY);
 }
 
 function moveBall() {
   ballX += ballSpeed * ballXDirection;
   ballY += ballSpeed * ballYDirection;
-  console.log("Ball moved to:", ballX, ballY); // Debugging line
 }
 
 function drawBall(ballX, ballY) {
-  // Store current position in the trail array
   ballTrail.push({ x: ballX, y: ballY });
 
-  // Limit trail length (remove the oldest trail)
   if (ballTrail.length > 20) {
     ballTrail.shift();
   }
 
-  // Draw the trail behind the ball
   for (let i = 0; i < ballTrail.length; i++) {
-    const trailAlpha = (i + 1) / ballTrail.length; // Calculate fading alpha
-    ctx.fillStyle = `rgba(255, 165, 0, ${trailAlpha})`; // Fading orange color
+    const trailAlpha = (i + 1) / ballTrail.length;
+    ctx.fillStyle = `rgba(255, 0, 0, ${trailAlpha})`; // Red shadow effect with fading
     ctx.fillRect(
       ballTrail[i].x - ballRadius / 2,
       ballTrail[i].y - ballRadius / 2,
       ballRadius,
       ballRadius
-    ); // Draw the trail as a rectangle
+    );
   }
 
-  // Draw the ball itself
   const ballGradient = ctx.createRadialGradient(
     ballX,
     ballY,
@@ -129,7 +120,7 @@ function drawBall(ballX, ballY) {
     ballRadius
   );
   ballGradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-  ballGradient.addColorStop(1, "rgba(255, 165, 0, 1)");
+  ballGradient.addColorStop(1, "rgba(0, 0, 255, 1)"); // Ball color gradient from white to blue
 
   ctx.beginPath();
   ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
@@ -178,6 +169,7 @@ function increaseBallSpeed() {
     ballSpeed = 15;
   }
 }
+
 let paddleSpeed = 8;
 let paddle1SpeedY = 0;
 let paddle2SpeedY = 0;
@@ -204,6 +196,7 @@ function changeDirection(event) {
       break;
   }
 }
+
 function stopPaddleMovement(event) {
   const keyPressed = event.keyCode;
   const paddle1Up = 87;
@@ -222,6 +215,7 @@ function stopPaddleMovement(event) {
       break;
   }
 }
+
 function updatePaddlePosition() {
   if (
     paddle1.y + paddle1SpeedY >= 0 &&
