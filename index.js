@@ -29,11 +29,9 @@ let paddle1 = {
 let paddle2 = {
     width: 10,
     height: 100,
-    x: gameWidth - paddleMargin - 10,
+    x: gameWidth - paddleMargin -10,
     y: gameHeight - 100
-
 };
-
 
 // Trail array to store previous ball positions
 let ballTrail = [];
@@ -183,36 +181,28 @@ function increaseBallSpeed() {
 let paddleSpeed = 8;
 let paddle1SpeedY = 0;
 let paddle2SpeedY = 0;
-function changeDirection(event) {
-  const keyPressed = event.keyCode;
-  const paddle1Up = 87;
-  const paddle1Down = 83;
-  const paddle2Up = 38;
-  const paddle2Down = 40;
 
-  switch (keyPressed) {
-    case paddle1Up:
-      if (paddle1.y > 0) {
-        paddle1.y -= paddleSpeed;
-      }
-      break;
-    case paddle1Down:
-      if (paddle1.y < gameHeight - paddle1.height) {
-        paddle1.y += paddleSpeed;
-      }
-      break;
-    case paddle2Up:
-      if (paddle2.y > 0) {
-        paddle2.y -= paddleSpeed;
-      }
-      break;
-    case paddle2Down:
-      if (paddle2.y < gameHeight - paddle2.height) {
-        paddle2.y += paddleSpeed;
-      }
-      break;
-  }
-}
+function changeDirection(event){
+    const keyPressed = event.keyCode;
+    const paddle1Up = 87;
+    const paddle1Down = 83;
+    const paddle2Up = 38;
+    const paddle2Down = 40;
+
+    switch(keyPressed){
+        case(paddle1Up):
+            paddle1SpeedY = -paddleSpeed;
+            break;
+        case(paddle1Down):
+            paddle1SpeedY = paddleSpeed;
+            break;
+        case(paddle2Up):
+            paddle2SpeedY = -paddleSpeed;
+            break;
+        case(paddle2Down):
+            paddle2SpeedY = paddleSpeed;
+            break;
+    }}
 function stopPaddleMovement(event){
     const keyPressed = event.keyCode;
     const paddle1Up = 87;
@@ -278,5 +268,4 @@ function resetGame() {
     updateScore();
     clearInterval(intervalID);
     gameStart();
- 
 }
