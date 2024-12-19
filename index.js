@@ -89,15 +89,48 @@ function moveBall(){
     ballX += (ballSpeed * ballXDirection);
     ballY += (ballSpeed * ballYDirection);
 };
-function drawBall(ballX, ballY){
-    ctx.fillStyle = ballColor;
-    ctx.strokeStyle = ballBorderColor;
-    ctx.lineWidth = 2;
+
+// function drawBall(ballX, ballY){
+//     ctx.fillStyle = ballColor;
+//     ctx.strokeStyle = ballBorderColor;
+//     ctx.lineWidth = 2;
+//     ctx.beginPath();
+//     ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+//     ctx.stroke();
+//     ctx.fill();
+// };
+
+function drawBall(ballX, ballY) {
+    // Create a glowing effect using a radial gradient for the ball
+    const ballGradient = ctx.createRadialGradient(ballX, ballY, 0, ballX, ballY, ballRadius);
+    
+    // Add color stops for the glowing effect (from white to orange)
+    ballGradient.addColorStop(0, 'rgba(255, 255, 255, 1)');  // Bright white center
+    ballGradient.addColorStop(1, 'rgba(255, 165, 0, 1)');    // Outer orange glow
+
+    // Draw the ball with a glowing effect
     ctx.beginPath();
     ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
-    ctx.stroke();
+    ctx.fillStyle = ballGradient;
     ctx.fill();
-};
+
+    // Optional: Add a subtle trailing effect (similar to a shooting star tail)
+    // Create a faint shadow that extends behind the ball for a trailing effect
+    ctx.shadowColor = 'rgba(255, 255, 255, 0.7)';  // White shadow for the tail
+    ctx.shadowBlur = 20;  // Spread of the shadow for tail effect
+
+    // Draw the ball with the shadow effect (this will make it appear like a shooting star)
+    ctx.beginPath();
+    ctx.arc(ballX, ballY, ballRadius, 0, 2 * Math.PI);
+    ctx.fillStyle = ballGradient;
+    ctx.fill();
+
+    // Reset the shadow to avoid affecting other drawings on the canvas
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+}
+
+
 function checkCollision(){
     if(ballY <= 0 + ballRadius){
         ballYDirection *= -1;
