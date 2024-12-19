@@ -10,7 +10,7 @@ const paddle2Color = "red";
 const paddleBorder = "black";
 const ballColor = "yellow";
 const ballRadius = 12.5;
-const paddleSpeed = 50;
+// const paddleSpeed = 50;
 let intervalID;
 let ballSpeed;
 let ballX = gameWidth / 2;
@@ -19,7 +19,19 @@ let ballXDirection = 0;
 let ballYDirection = 0;
 let player1Score = 0;
 let player2Score = 0;
+let paddleMargin = 10;
 let paddle1 = {
+    width: 25,
+    height: 100,
+    x: paddleMargin,
+    y: 0
+};
+let paddle2 = {
+    width: 25,
+    height: 100,
+    x: gameWidth - paddleMargin - 25,
+    y: gameHeight - 100
+=======
   width: 25,
   height: 100,
   x: 0,
@@ -177,7 +189,31 @@ function increaseBallSpeed() {
     ballSpeed = 15;
   }
 }
+let paddleSpeed = 8;
+let paddle1SpeedY = 0;
+let paddle2SpeedY = 0;
 
+function changeDirection(event){
+    const keyPressed = event.keyCode;
+    const paddle1Up = 87;
+    const paddle1Down = 83;
+    const paddle2Up = 38;
+    const paddle2Down = 40;
+
+    switch(keyPressed){
+        case(paddle1Up):
+            paddle1SpeedY = -paddleSpeed;
+            break;
+        case(paddle1Down):
+            paddle1SpeedY = paddleSpeed;
+            break;
+        case(paddle2Up):
+            paddle2SpeedY = -paddleSpeed;
+            break;
+        case(paddle2Down):
+            paddle2SpeedY = paddleSpeed;
+            break;
+    }
 function changeDirection(event) {
   const keyPressed = event.keyCode;
   const paddle1Up = 87;
@@ -208,12 +244,72 @@ function changeDirection(event) {
       break;
   }
 }
+function stopPaddleMovement(event){
+    const keyPressed = event.keyCode;
+    const paddle1Up = 87;
+    const paddle1Down = 83;
+    const paddle2Up = 38;
+    const paddle2Down = 40;
+
+    switch(keyPressed){
+        case(paddle1Up):
+        case(paddle1Down):
+            paddle1SpeedY = 0;
+            break;
+        case(paddle2Up):
+        case(paddle2Down):
+            paddle2SpeedY = 0;
+            break;
+    }
+}
+function updatePaddlePosition(){
+    
+    if (paddle1.y + paddle1SpeedY >= 0 && paddle1.y + paddle1SpeedY <= gameHeight - paddle1.height) {
+        paddle1.y += paddle1SpeedY;
+    }
+    if (paddle2.y + paddle2SpeedY >= 0 && paddle2.y + paddle2SpeedY <= gameHeight - paddle2.height) {
+        paddle2.y += paddle2SpeedY;
+    }
+
+    requestAnimationFrame(updatePaddlePosition);
+}
+
+document.addEventListener('keydown', changeDirection);
+document.addEventListener('keyup', stopPaddleMovement);
+
+requestAnimationFrame(updatePaddlePosition);
+
+
+
 
 function updateScore() {
   scoreText.textContent = `${player1Score} : ${player2Score}`;
 }
 
 function resetGame() {
+    player1Score = 0;
+    player2Score = 0;
+    paddle1 = {
+        width: 25,
+        height: 100,
+        x: paddleMargin,
+        y: 0
+    };
+    paddle2 = {
+        width: 25,
+        height: 100,
+        x: gameWidth - paddleMargin - 25,
+        y: gameHeight - 100
+    };
+    ballSpeed = 1;
+    ballX = 0;
+    ballY = 0;
+    ballXDirection = 0;
+    ballYDirection = 0;
+    updateScore();
+    clearInterval(intervalID);
+    gameStart();
+=======
   player1Score = 0;
   player2Score = 0;
   paddle1 = {
