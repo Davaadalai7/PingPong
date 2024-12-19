@@ -102,3 +102,7 @@ outline: none; /* Remove default button outline */
     transition: all 0.3s ease-in-out;
     outline: none; /* Remove default button outline */
 }
+#hid{
+    visibility: hidden;
+    display: none;
+}

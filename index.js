@@ -231,23 +231,25 @@ function changeDirection(event){
             break;
     }}
 function stopPaddleMovement(event){
-    const keyPressed = event.keyCode;
-    const paddle1Up = 87;
-    const paddle1Down = 83;
-    const paddle2Up = 38;
-    const paddle2Down = 40;
 
-    switch(keyPressed){
-        case(paddle1Up):
-        case(paddle1Down):
-            paddle1SpeedY = 0;
-            break;
-        case(paddle2Up):
-        case(paddle2Down):
-            paddle2SpeedY = 0;
-            break;
-    }
+
+    document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
+      
+      const mouseY = e.clientY;
+      paddle1.y = mouseY -180;
+  });
+
+ 
+  setInterval(() => {
+      if (ballY < paddle2.y + paddle2.height / 2) {
+          paddle2.y -= 15; 
+      } else if (ballY > paddle2.y + paddle2.height / 2) {
+          paddle2.y += 15; 
+      }
+  }, 100);
+    
 }
+stopPaddleMovement(1)
 function updatePaddlePosition(){
     
     if (paddle1.y + paddle1SpeedY >= 0 && paddle1.y + paddle1SpeedY <= gameHeight - paddle1.height) {
@@ -299,20 +301,7 @@ function resetGame() {
 //=========================tttt
 
 function computerFunction() {
-    document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
-      
-        const mouseY = e.clientY;
-        paddle1.y = mouseY -180;
-    });
 
-   
-    setInterval(() => {
-        if (ballY < paddle2.y + paddle2.height / 2) {
-            paddle2.y -= 15; 
-        } else if (ballY > paddle2.y + paddle2.height / 2) {
-            paddle2.y += 15; 
-        }
-    }, 100);
 }
 //=========================tttt
 }
