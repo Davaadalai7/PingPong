@@ -9,14 +9,14 @@ document.getElementById('gameContainer').appendChild(player1VSplayer2)
 player1VSplayer2.addEventListener('click', () => {
     computerButtom.id= 'hid'
     player1VSplayer2.id= 'hid'
-    a()
+    b()
     computerButtom.disabled = true;
     window.addEventListener("keydown", changeDirection);
   });
 computerButtom.addEventListener('click', () => {
       computerButtom.id= 'hid'
     player1VSplayer2.id= 'hid'
-    b()
+    a()
     player1VSplayer2.disabled = true;
     setTimeout(() => {
       computerFunction();
@@ -210,43 +210,42 @@ let paddle1SpeedY = 0;
 let paddle2SpeedY = 0;
 
 function changeDirection(event){
-    const keyPressed = event.keyCode;
-    const paddle1Up = 87;
-    const paddle1Down = 83;
-    const paddle2Up = 38;
-    const paddle2Down = 40;
-
-    switch(keyPressed){
-        case(paddle1Up):
-            paddle1SpeedY = -paddleSpeed;
-            break;
-        case(paddle1Down):
-            paddle1SpeedY = paddleSpeed;
-            break;
-        case(paddle2Up):
-            paddle2SpeedY = -paddleSpeed;
-            break;
-        case(paddle2Down):
-            paddle2SpeedY = paddleSpeed;
-            break;
-    }}
-function stopPaddleMovement(event){
-
-
-    document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
-      
-      const mouseY = e.clientY;
-      paddle1.y = mouseY -180;
-  });
-
  
-  setInterval(() => {
-      if (ballY < paddle2.y + paddle2.height / 2) {
-          paddle2.y -= 15; 
-      } else if (ballY > paddle2.y + paddle2.height / 2) {
-          paddle2.y += 15; 
-      }
-  }, 100);
+  document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
+      
+    const mouseY = e.clientY;
+    paddle1.y = mouseY -180;
+});
+
+
+setInterval(() => {
+    if (ballY < paddle2.y + paddle2.height / 2) {
+        paddle2.y -= 15; 
+    } else if (ballY > paddle2.y + paddle2.height / 2) {
+        paddle2.y += 15; 
+    }
+}, 100);
+    }
+    changeDirection(1)
+function stopPaddleMovement(event){
+  const keyPressed = event.keyCode;
+  const paddle1Up = 87;
+  const paddle1Down = 83;
+  const paddle2Up = 38;
+  const paddle2Down = 40;
+
+  switch(keyPressed){
+      case(paddle1Up):
+      case(paddle1Down):
+          paddle1SpeedY = 0;
+          break;
+      case(paddle2Up):
+      case(paddle2Down):
+          paddle2SpeedY = 0;
+          break;
+  }
+  
+
     
 }
 stopPaddleMovement(1)
