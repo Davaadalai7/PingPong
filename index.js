@@ -269,3 +269,5 @@ function resetGame() {
     clearInterval(intervalID);
     gameStart();
 }
+//ugf
+
