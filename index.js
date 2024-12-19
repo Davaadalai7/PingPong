@@ -21,28 +21,19 @@ let player1Score = 0;
 let player2Score = 0;
 let paddleMargin = 10;
 let paddle1 = {
-    width: 25,
+    width: 10,
     height: 100,
     x: paddleMargin,
     y: 0
 };
 let paddle2 = {
-    width: 25,
+    width: 10,
     height: 100,
-    x: gameWidth - paddleMargin - 25,
+    x: gameWidth - paddleMargin - 10,
     y: gameHeight - 100
-=======
-  width: 25,
-  height: 100,
-  x: 0,
-  y: 0,
+
 };
-let paddle2 = {
-  width: 25,
-  height: 100,
-  x: gameWidth - 25,
-  y: gameHeight - 100,
-};
+
 
 // Trail array to store previous ball positions
 let ballTrail = [];
@@ -192,28 +183,6 @@ function increaseBallSpeed() {
 let paddleSpeed = 8;
 let paddle1SpeedY = 0;
 let paddle2SpeedY = 0;
-
-function changeDirection(event){
-    const keyPressed = event.keyCode;
-    const paddle1Up = 87;
-    const paddle1Down = 83;
-    const paddle2Up = 38;
-    const paddle2Down = 40;
-
-    switch(keyPressed){
-        case(paddle1Up):
-            paddle1SpeedY = -paddleSpeed;
-            break;
-        case(paddle1Down):
-            paddle1SpeedY = paddleSpeed;
-            break;
-        case(paddle2Up):
-            paddle2SpeedY = -paddleSpeed;
-            break;
-        case(paddle2Down):
-            paddle2SpeedY = paddleSpeed;
-            break;
-    }
 function changeDirection(event) {
   const keyPressed = event.keyCode;
   const paddle1Up = 87;
@@ -290,15 +259,15 @@ function resetGame() {
     player1Score = 0;
     player2Score = 0;
     paddle1 = {
-        width: 25,
+        width: 10,
         height: 100,
         x: paddleMargin,
         y: 0
     };
     paddle2 = {
-        width: 25,
+        width: 10,
         height: 100,
-        x: gameWidth - paddleMargin - 25,
+        x: gameWidth - paddleMargin - 10,
         y: gameHeight - 100
     };
     ballSpeed = 1;
@@ -309,27 +278,5 @@ function resetGame() {
     updateScore();
     clearInterval(intervalID);
     gameStart();
-=======
-  player1Score = 0;
-  player2Score = 0;
-  paddle1 = {
-    width: 25,
-    height: 100,
-    x: 0,
-    y: 0,
-  };
-  paddle2 = {
-    width: 25,
-    height: 100,
-    x: gameWidth - 25,
-    y: gameHeight - 100,
-  };
-  ballSpeed = 1;
-  ballX = 0;
-  ballY = 0;
-  ballXDirection = 0;
-  ballYDirection = 0;
-  updateScore();
-  clearInterval(intervalID);
-  gameStart();
+ 
 }
