@@ -33,7 +33,7 @@ let paddle2 = {
     y: gameHeight - 100
 };
 
-window.addEventListener("keydown", changeDirection);
+/* window.addEventListener("keydown", changeDirection); */
 resetBtn.addEventListener("click", resetGame);
 
 gameStart();
@@ -218,3 +218,40 @@ function resetGame() {
     clearInterval(intervalID);
     gameStart();
 }
+//=========================tttt
+const computerButtom = document.createElement('button')
+computerButtom.innerHTML = 'player VS computer'
+computerButtom.id= 'computerButtom'
+document.getElementById('gameContainer').appendChild(computerButtom)
+const player1VSplayer2= document.createElement('button')
+player1VSplayer2.id= 'player1VSplayer2'
+player1VSplayer2.innerHTML = 'player VS player'
+document.getElementById('gameContainer').appendChild(player1VSplayer2)
+player1VSplayer2.addEventListener('click', () => {
+    computerButtom.disabled = true;
+    window.addEventListener("keydown", changeDirection);
+  });
+computerButtom.addEventListener('click', () => {
+    player1VSplayer2.disabled = true;
+    setTimeout(() => {
+      computerFunction();
+    }, 1000);});
+
+  
+function computerFunction() {
+    document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
+      
+        const mouseY = e.clientY;
+        paddle1.y = mouseY -180;
+    });
+
+   
+    setInterval(() => {
+        if (ballY < paddle2.y + paddle2.height / 2) {
+            paddle2.y -= 15; 
+        } else if (ballY > paddle2.y + paddle2.height / 2) {
+            paddle2.y += 15; 
+        }
+    }, 100);
+}
+//=========================tttt

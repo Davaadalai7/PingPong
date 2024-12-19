@@ -72,3 +72,34 @@ paddle {
     stroke: #000000;
     box-shadow: 0 0 15px #00FFFF; /* Ball glow */
 }
+/* button bot and player vs player */
+
+#computerButtom{
+
+font-family: "Permanent Marker", cursive;
+font-size: 12px;
+width: 120px;
+height: 50px;
+border: 4px solid #00FFFF; /* Neon blue border */
+border-radius: 15px;
+background-color: black;
+color: #00FFFF; /* Neon blue text */
+cursor: pointer;
+text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF; /* Glowing text */
+transition: all 0.3s ease-in-out;
+outline: none; /* Remove default button outline */
+}
+#player1VSplayer2{
+    font-family: "Permanent Marker", cursive;
+    font-size: 12px;
+    width: 120px;
+    height: 50px;
+    border: 4px solid #00FFFF; /* Neon blue border */
+    border-radius: 15px;
+    background-color: black;
+    color: #00FFFF; /* Neon blue text */
+    cursor: pointer;
+    text-shadow: 0 0 10px #00FFFF, 0 0 20px #00FFFF; /* Glowing text */
+    transition: all 0.3s ease-in-out;
+    outline: none; /* Remove default button outline */
+}
