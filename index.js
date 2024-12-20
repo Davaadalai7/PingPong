@@ -51,7 +51,7 @@ function nextTick() {
         drawBall(ballX, ballY);
         checkCollision();
         nextTick();
-    }, 10)
+    }, 10);
 }
 
 function clearBoard() {
@@ -73,16 +73,14 @@ function drawPaddles() {
 
 function createBall() {
     ballSpeed = 3;
-    if(Math.round(Math.random()) == 1){
-        ballXDirection =  1; 
+    if (Math.round(Math.random()) == 1) {
+        ballXDirection = 1;
+    } else {
+        ballXDirection = -1;
     }
-    else{
-        ballXDirection = -1; 
-    }
-    if(Math.round(Math.random()) == 1){
+    if (Math.round(Math.random()) == 1) {
         ballYDirection = Math.random() * 1;
-    }
-    else{
+    } else {
         ballYDirection = Math.random() * -1;
     }
     ballX = gameWidth / 2;
@@ -118,36 +116,53 @@ function drawBall(ballX, ballY) {
 }
 
 function checkCollision() {
-    if(ballY <= 0 + ballRadius){
+    // Бөмбөг дээд таазтай мөргөлдөх
+    if (ballY <= 0 + ballRadius) {
         ballYDirection *= -1;
+        playSound("bounceSound");  // Дуу тоглуулах
     }
-    if(ballY >= gameHeight - ballRadius){
+    
+    // Бөмбөг доод таазтай мөргөлдөх
+    if (ballY >= gameHeight - ballRadius) {
         ballYDirection *= -1;
+        playSound("bounceSound");  // Дуу тоглуулах
     }
-    if(ballX <= 0){
+
+    // Бөмбөг 1-р тоглогчийн хаалганд орох (Тоглогч 2 оноо авсан)
+    if (ballX <= 0) {
         player2Score += 1;
         updateScore();
         createBall();
         increaseBallSpeed();
+        playSound("scoreSound");  // Дуу тоглуулах
         return;
     }
-    if(ballX >= gameWidth){
+
+    // Бөмбөг 2-р тоглогчийн хаалганд орох (Тоглогч 1 оноо авсан)
+    if (ballX >= gameWidth) {
         player1Score += 1;
         updateScore();
         createBall();
         increaseBallSpeed();
+        playSound("scoreSound");  // Дуу тоглуулах
         return;
     }
-    if(ballX <= (paddle1.x + paddle1.width + ballRadius)){
-        if(ballY > paddle1.y && ballY < paddle1.y + paddle1.height){
+
+    // Бөмбөг 1-р тоглогчийн таазтай мөргөлдөх
+    if (ballX <= (paddle1.x + paddle1.width + ballRadius)) {
+        if (ballY > paddle1.y && ballY < paddle1.y + paddle1.height) {
             ballX = (paddle1.x + paddle1.width) + ballRadius;
             ballXDirection *= -1;
+            playSound("bounceSound");  // Дуу тоглуулах
         }
     }
-    if(ballX >= (paddle2.x - ballRadius)){
-        if(ballY > paddle2.y && ballY < paddle2.y + paddle2.height){
+
+    // Бөмбөг 2-р тоглогчийн таазтай мөргөлдөх
+    if (ballX >= (paddle2.x - ballRadius)) {
+        if (ballY > paddle2.y && ballY < paddle2.y + paddle2.height) {
             ballX = paddle2.x - ballRadius;
             ballXDirection *= -1;
+            playSound("bounceSound");  // Дуу тоглуулах
         }
     }
 }
@@ -166,24 +181,24 @@ function changeDirection(event) {
     const paddle2Up = 38;
     const paddle2Down = 40;
 
-    switch(keyPressed){
-        case(paddle1Up):
-            if(paddle1.y > 0){
+    switch (keyPressed) {
+        case (paddle1Up):
+            if (paddle1.y > 0) {
                 paddle1.y -= paddleSpeed;
             }
             break;
-        case(paddle1Down):
-            if(paddle1.y < gameHeight - paddle1.height){
+        case (paddle1Down):
+            if (paddle1.y < gameHeight - paddle1.height) {
                 paddle1.y += paddleSpeed;
             }
             break;
-        case(paddle2Up):
-            if(paddle2.y > 0){
+        case (paddle2Up):
+            if (paddle2.y > 0) {
                 paddle2.y -= paddleSpeed;
             }
             break;
-        case(paddle2Down):
-            if(paddle2.y < gameHeight - paddle2.height){
+        case (paddle2Down):
+            if (paddle2.y < gameHeight - paddle2.height) {
                 paddle2.y += paddleSpeed;
             }
             break;
@@ -218,4 +233,11 @@ function resetGame() {
     clearInterval(intervalID);
     gameStart();
 }
-//fjhahodhfo
+
+// sound
+
+function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;  // Дууг эхнээс нь дахин тоглуулах
+    sound.play();
+}
