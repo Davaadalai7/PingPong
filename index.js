@@ -266,3 +266,4 @@ function resetGame() {
   clearInterval(intervalID);
   gameStart();
 }
+//gay
