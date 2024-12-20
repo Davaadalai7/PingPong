@@ -297,7 +297,7 @@ function playSound(soundId) {
     const sound = document.getElementById(soundId);
     sound.currentTime = 0;  // Дууг эхнээс нь дахин тоглуулах
     sound.play();
-
+}
 //=========================tttt
 const computerButtom = document.createElement('button')
 computerButtom.innerHTML = 'player VS computer'
