@@ -143,9 +143,19 @@ function drawBall(ballX, ballY) {
 function checkCollision() {
   if (ballY <= 0 + ballRadius) {
     ballYDirection *= -1;
-  }
-  if (ballY >= gameHeight - ballRadius) {
+  }else if (ballY >= gameHeight - ballRadius) {
     ballYDirection *= -1;
+  }else if((ballX<=0+ballRadius&&ballY>gameHeight-100&&ballY<gameHeight-ballRadius)){
+    ballXDirection *= -1;
+  }else if((ballX<=0+ballRadius&&ballY<100&&ballY>ballRadius)){
+    ballXDirection *= -1;
+    ballYDirection *=-1;
+  }else if((ballX>=gameWidth-ballRadius&&ballY>gameHeight-100&&ballY<gameHeight-ballRadius)){
+    
+    ballXDirection *=-1;
+  }else if((ballX>=gameWidth-ballRadius&&ballY<100&&ballY>ballRadius)){
+    
+    ballXDirection *=-1;
   }
   if (ballX <= 0) {
     player2Score += 1;
