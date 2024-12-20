@@ -25,13 +25,13 @@ let paddle1 = {
     width: 10,
     height: 100,
     x: paddleMargin,
-    y: 0
+    y: gameHeight / 2 - 50
 };
 let paddle2 = {
     width: 10,
     height: 100,
     x: gameWidth - paddleMargin -10,
-    y: gameHeight - 100
+    y: gameHeight / 2 - 50
 };
 
 /* window.addEventListener("keydown", changeDirection); */
@@ -291,13 +291,13 @@ function resetGame() {
         width: 10,
         height: 100,
         x: paddleMargin,
-        y: 0
+        y: gameHeight / 2 - 50
     };
     paddle2 = {
         width: 10,
         height: 100,
         x: gameWidth - paddleMargin - 10,
-        y: gameHeight - 100
+        y: gameHeight / 2 - 50
     };
     ballSpeed = 1;
     ballX = 0;
