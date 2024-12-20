@@ -1,7 +1,9 @@
 const computerButtom = document.createElement('button')
 const player1VSplayer2 = document.createElement('button')
 const refresh = document.createElement('button')
- 
+const reset = document.createElement('button')
+reset.innerHTML = 'reset'
+ reset.id = 'resetBtn'
 
 refresh.innerHTML = 'back'
 refresh.id = 'resetBtn'
@@ -14,10 +16,11 @@ document.getElementById('gameContainer').appendChild(computerButtom)
 document.getElementById('gameContainer').appendChild(player1VSplayer2)
 
 player1VSplayer2.addEventListener('click', () => {
+  document.getElementById('gameContainer').appendChild(reset)
   document.getElementById('gameContainer').appendChild(refresh)
   player1VSplayer2.id = 'hid'
   computerButtom.id = 'hid'
-  b()
+  player()
   computerButtom.disabled = true;
   refresh.addEventListener('click', () => {
     function reloadPage() {
@@ -26,10 +29,11 @@ player1VSplayer2.addEventListener('click', () => {
   })
 });
 computerButtom.addEventListener('click', () => {
+  document.getElementById('gameContainer').appendChild(reset)
   document.getElementById('gameContainer').appendChild(refresh)
   computerButtom.id = 'hid'
   player1VSplayer2.id = 'hid'
-  a()
+  bot()
   player1VSplayer2.disabled = true;
   /*   setTimeout(() => {
       computerFunction();
@@ -44,7 +48,7 @@ computerButtom.addEventListener('click', () => {
 
 
 
-function a() {
+function bot() {
   const gameBoard = document.querySelector("#gameBoard");
   const ctx = gameBoard.getContext("2d");
   const scoreText = document.querySelector("#scoreText");
@@ -238,7 +242,8 @@ function a() {
     document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
 
       const mouseY = e.clientY;
-      paddle1.y = mouseY - 180;
+      paddle1.y = mouseY -220;
+      
     });
 
 
@@ -329,7 +334,7 @@ function a() {
   }
   //=========================tttt
 }
-function b() {
+function player() {
   const gameBoard = document.querySelector("#gameBoard");
   const ctx = gameBoard.getContext("2d");
   const scoreText = document.querySelector("#scoreText");
