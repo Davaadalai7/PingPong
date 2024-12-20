@@ -150,7 +150,6 @@ function checkCollision() {
   }else if((ballX<=0+ballRadius&&ballY<100&&ballY>ballRadius)){
     ballXDirection *= -1;
   }else if((ballX>=gameWidth-ballRadius&&ballY>gameHeight-100&&ballY<gameHeight-ballRadius)){
-    
     ballXDirection *=-1;
   }else if((ballX>=gameWidth-ballRadius&&ballY<100&&ballY>ballRadius)){
     
