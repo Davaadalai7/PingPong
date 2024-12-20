@@ -50,14 +50,15 @@ function gameStart() {
 }
 
 function nextTick() {
-  intervalID = setTimeout(() => {
-    clearBoard();
-    drawPaddles();
-    moveBall();
-    drawBall(ballX, ballY); // Draw ball and trail
-    checkCollision();
-    nextTick();
-  }, 10);
+
+    intervalID = setTimeout(() => {
+        clearBoard();
+        drawPaddles();
+        moveBall();
+        drawBall(ballX, ballY);
+        checkCollision();
+        nextTick();
+    }, 10);
 }
 
 function clearBoard() {
@@ -78,21 +79,20 @@ function drawPaddles() {
 }
 
 function createBall() {
-  ballSpeed = 3;
-  if (Math.round(Math.random()) == 1) {
-    ballXDirection = 1;
-  } else {
-    ballXDirection = -1;
-  }
-  if (Math.round(Math.random()) == 1) {
-    ballYDirection = Math.random() * 1;
-  } else {
-    ballYDirection = Math.random() * -1;
-  }
-  ballX = gameWidth / 2;
-  ballY = gameHeight / 2;
-  console.log("Ball created at:", ballX, ballY); // Debugging line
-  drawBall(ballX, ballY);
+    ballSpeed = 3;
+    if (Math.round(Math.random()) == 1) {
+        ballXDirection = 1;
+    } else {
+        ballXDirection = -1;
+    }
+    if (Math.round(Math.random()) == 1) {
+        ballYDirection = Math.random() * 1;
+    } else {
+        ballYDirection = Math.random() * -1;
+    }
+    ballX = gameWidth / 2;
+    ballY = gameHeight / 2;
+    drawBall(ballX, ballY);
 }
 
 function moveBall() {
@@ -143,23 +143,29 @@ function drawBall(ballX, ballY) {
 function checkCollision() {
   if (ballY <= 0 + ballRadius) {
     ballYDirection *= -1;
+    playSound("bounceSound"); 
   }else if (ballY >= gameHeight - ballRadius) {
     ballYDirection *= -1;
+    playSound("bounceSound"); 
   }else if((ballX<=0+ballRadius&&ballY>gameHeight-100&&ballY<gameHeight-ballRadius)){
     ballXDirection *= -1;
+    playSound("bounceSound"); 
   }else if((ballX<=0+ballRadius&&ballY<100&&ballY>ballRadius)){
     ballXDirection *= -1;
+    playSound("bounceSound"); 
   }else if((ballX>=gameWidth-ballRadius&&ballY>gameHeight-100&&ballY<gameHeight-ballRadius)){
     ballXDirection *=-1;
+    playSound("bounceSound"); 
   }else if((ballX>=gameWidth-ballRadius&&ballY<100&&ballY>ballRadius)){
-    
     ballXDirection *=-1;
+    playSound("bounceSound"); 
   }
   if (ballX <= 0) {
     player2Score += 1;
     updateScore();
     createBall();
     increaseBallSpeed();
+    playSound("scoreSound");  
     return;
   }
   if (ballX >= gameWidth) {
@@ -167,18 +173,21 @@ function checkCollision() {
     updateScore();
     createBall();
     increaseBallSpeed();
+    playSound("scoreSound");  
     return;
   }
   if (ballX <= paddle1.x + paddle1.width + ballRadius) {
     if (ballY > paddle1.y && ballY < paddle1.y + paddle1.height) {
       ballX = paddle1.x + paddle1.width + ballRadius;
       ballXDirection *= -1;
+      playSound("bounceSound"); 
     }
   }
   if (ballX >= paddle2.x - ballRadius) {
     if (ballY > paddle2.y && ballY < paddle2.y + paddle2.height) {
       ballX = paddle2.x - ballRadius;
       ballXDirection *= -1;
+      playSound("bounceSound"); 
     }
   }
 }
@@ -199,6 +208,7 @@ function changeDirection(event){
     const paddle1Down = 83;
     const paddle2Up = 38;
     const paddle2Down = 40;
+
 
     switch(keyPressed){
         case(paddle1Up):
@@ -280,6 +290,14 @@ function resetGame() {
     clearInterval(intervalID);
     gameStart();
 }
+
+// sound
+
+function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;  // Дууг эхнээс нь дахин тоглуулах
+    sound.play();
+
 //=========================tttt
 const computerButtom = document.createElement('button')
 computerButtom.innerHTML = 'player VS computer'
