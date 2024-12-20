@@ -41,3 +41,51 @@ const nicknameInput=document.createElement("input")
 nicknameInput.type="text"
 logIn.appendChild(nicknameInput)
 startPage.appendChild(logIn);
+
+function imageChoices(name, value, imageUrl) {
+    const container = document.createElement('div');
+    container.className = 'radio-label';
+
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = name;
+    input.id = value;
+    input.value = value;
+
+    const label = document.createElement('label');
+    label.setAttribute('for', value);
+
+    const img = document.createElement('img');
+    img.src =imageUrl;
+    img.alt = value;
+
+    label.appendChild(img);
+    container.appendChild(input);
+    container.appendChild(label);
+
+    // Add click event to update selected image style
+    input.addEventListener('change', () => {
+      document.querySelectorAll('.radio-label img').forEach((img) => {
+        img.classList.remove('selected');
+      });
+      img.classList.add('selected');
+    });
+
+    return container;
+  }
+  const profileImg=["profile1.jpg","profile2.jpg","profile3.webp","profile4.jpg",]
+  profileImg.forEach(el=>{
+    startPage.appendChild(imageChoices("profileImg",el.indexOf+1,el))
+  })
+
+/**
+ * #Field45-1 + label {
+    background-image: url(imageURLhere);
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat;
+    height: 80px !important;
+    width: 85px !important;
+    display: inline-block;
+      color:white;
+}
+ */
