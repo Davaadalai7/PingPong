@@ -21,20 +21,27 @@ let player1Score = 0;
 let player2Score = 0;
 let paddleMargin = 10;
 let paddle1 = {
-  width: 10,
-  height: 100,
-  x: paddleMargin,
-  y: 0,
+
+    width: 10,
+    height: 100,
+    x: paddleMargin,
+    y: 0
 };
 let paddle2 = {
-  width: 10,
-  height: 100,
-  x: gameWidth - paddleMargin - 10,
-  y: gameHeight - 100,
+    width: 10,
+    height: 100,
+    x: gameWidth - paddleMargin -10,
+    y: gameHeight - 100
 };
+
+/* window.addEventListener("keydown", changeDirection); */
+
+// Trail array to store previous ball positions
+
 let ballTrail = [];
 
 window.addEventListener("keydown", changeDirection);
+
 resetBtn.addEventListener("click", resetGame);
 
 gameStart();
@@ -45,14 +52,14 @@ function gameStart() {
 }
 
 function nextTick() {
-  intervalID = setTimeout(() => {
-    clearBoard();
-    drawPaddles();
-    moveBall();
-    drawBall(ballX, ballY);
-    checkCollision();
-    nextTick();
-  }, 10);
+    intervalID = setTimeout(() => {
+        clearBoard();
+        drawPaddles();
+        moveBall();
+        drawBall(ballX, ballY);
+        checkCollision();
+        nextTick();
+    }, 10);
 }
 
 function clearBoard() {
@@ -72,20 +79,20 @@ function drawPaddles() {
 }
 
 function createBall() {
-  ballSpeed = 3;
-  if (Math.round(Math.random()) == 1) {
-    ballXDirection = 1;
-  } else {
-    ballXDirection = -1;
-  }
-  if (Math.round(Math.random()) == 1) {
-    ballYDirection = Math.random() * 1;
-  } else {
-    ballYDirection = Math.random() * -1;
-  }
-  ballX = gameWidth / 2;
-  ballY = gameHeight / 2;
-  drawBall(ballX, ballY);
+    ballSpeed = 3;
+    if (Math.round(Math.random()) == 1) {
+        ballXDirection = 1;
+    } else {
+        ballXDirection = -1;
+    }
+    if (Math.round(Math.random()) == 1) {
+        ballYDirection = Math.random() * 1;
+    } else {
+        ballYDirection = Math.random() * -1;
+    }
+    ballX = gameWidth / 2;
+    ballY = gameHeight / 2;
+    drawBall(ballX, ballY);
 }
 
 function moveBall() {
@@ -131,15 +138,29 @@ function drawBall(ballX, ballY) {
 function checkCollision() {
   if (ballY <= 0 + ballRadius) {
     ballYDirection *= -1;
-  }
-  if (ballY >= gameHeight - ballRadius) {
+    playSound("bounceSound"); 
+  }else if (ballY >= gameHeight - ballRadius) {
     ballYDirection *= -1;
+    playSound("bounceSound"); 
+  }else if((ballX<=0+ballRadius&&ballY>gameHeight-100&&ballY<gameHeight-ballRadius)){
+    ballXDirection *= -1;
+    playSound("bounceSound"); 
+  }else if((ballX<=0+ballRadius&&ballY<100&&ballY>ballRadius)){
+    ballXDirection *= -1;
+    playSound("bounceSound"); 
+  }else if((ballX>=gameWidth-ballRadius&&ballY>gameHeight-100&&ballY<gameHeight-ballRadius)){
+    ballXDirection *=-1;
+    playSound("bounceSound"); 
+  }else if((ballX>=gameWidth-ballRadius&&ballY<100&&ballY>ballRadius)){
+    ballXDirection *=-1;
+    playSound("bounceSound"); 
   }
   if (ballX <= 0) {
     player2Score += 1;
     updateScore();
     createBall();
     increaseBallSpeed();
+    playSound("scoreSound");  
     return;
   }
   if (ballX >= gameWidth) {
@@ -147,18 +168,21 @@ function checkCollision() {
     updateScore();
     createBall();
     increaseBallSpeed();
+    playSound("scoreSound");  
     return;
   }
   if (ballX <= paddle1.x + paddle1.width + ballRadius) {
     if (ballY > paddle1.y && ballY < paddle1.y + paddle1.height) {
       ballX = paddle1.x + paddle1.width + ballRadius;
       ballXDirection *= -1;
+      playSound("bounceSound"); 
     }
   }
   if (ballX >= paddle2.x - ballRadius) {
     if (ballY > paddle2.y && ballY < paddle2.y + paddle2.height) {
       ballX = paddle2.x - ballRadius;
       ballXDirection *= -1;
+      playSound("bounceSound"); 
     }
   }
 }
@@ -169,7 +193,6 @@ function increaseBallSpeed() {
     ballSpeed = 15;
   }
 }
-
 let paddleSpeed = 8;
 let paddle1SpeedY = 0;
 let paddle2SpeedY = 0;
@@ -215,6 +238,25 @@ function stopPaddleMovement(event) {
       break;
   }
 }
+function updatePaddlePosition(){
+    
+    if (paddle1.y + paddle1SpeedY >= 0 && paddle1.y + paddle1SpeedY <= gameHeight - paddle1.height) {
+        paddle1.y += paddle1SpeedY;
+    }
+    if (paddle2.y + paddle2SpeedY >= 0 && paddle2.y + paddle2SpeedY <= gameHeight - paddle2.height) {
+        paddle2.y += paddle2SpeedY;
+    }
+
+    requestAnimationFrame(updatePaddlePosition);
+}
+
+document.addEventListener('keydown', changeDirection);
+document.addEventListener('keyup', stopPaddleMovement);
+
+requestAnimationFrame(updatePaddlePosition);
+
+
+
 
 function updatePaddlePosition() {
   if (
@@ -243,27 +285,71 @@ function updateScore() {
 }
 
 function resetGame() {
-  player1Score = 0;
-  player2Score = 0;
-  paddle1 = {
-    width: 10,
-    height: 100,
-    x: paddleMargin,
-    y: 0,
-  };
-  paddle2 = {
-    width: 10,
-    height: 100,
-    x: gameWidth - paddleMargin - 10,
-    y: gameHeight - 100,
-  };
-  ballSpeed = 1;
-  ballX = 0;
-  ballY = 0;
-  ballXDirection = 0;
-  ballYDirection = 0;
-  updateScore();
-  clearInterval(intervalID);
-  gameStart();
+    player1Score = 0;
+    player2Score = 0;
+    paddle1 = {
+        width: 10,
+        height: 100,
+        x: paddleMargin,
+        y: 0
+    };
+    paddle2 = {
+        width: 10,
+        height: 100,
+        x: gameWidth - paddleMargin - 10,
+        y: gameHeight - 100
+    };
+    ballSpeed = 1;
+    ballX = 0;
+    ballY = 0;
+    ballXDirection = 0;
+    ballYDirection = 0;
+    updateScore();
+    clearInterval(intervalID);
+    gameStart();
+}
+
+// sound
+
+function playSound(soundId) {
+    const sound = document.getElementById(soundId);
+    sound.currentTime = 0;  // Дууг эхнээс нь дахин тоглуулах
+    sound.play();
+}
+//=========================tttt
+const computerButtom = document.createElement('button')
+computerButtom.innerHTML = 'player VS computer'
+computerButtom.id= 'computerButtom'
+document.getElementById('gameContainer').appendChild(computerButtom)
+const player1VSplayer2= document.createElement('button')
+player1VSplayer2.id= 'player1VSplayer2'
+player1VSplayer2.innerHTML = 'player VS player'
+document.getElementById('gameContainer').appendChild(player1VSplayer2)
+player1VSplayer2.addEventListener('click', () => {
+    computerButtom.disabled = true;
+    window.addEventListener("keydown", changeDirection);
+  });
+computerButtom.addEventListener('click', () => {
+    player1VSplayer2.disabled = true;
+    setTimeout(() => {
+      computerFunction();
+    }, 1000);});
+
+  
+function computerFunction() {
+    document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
+      
+        const mouseY = e.clientY;
+        paddle1.y = mouseY -180;
+    });
+
+   
+    setInterval(() => {
+        if (ballY < paddle2.y + paddle2.height / 2) {
+            paddle2.y -= 15; 
+        } else if (ballY > paddle2.y + paddle2.height / 2) {
+            paddle2.y += 15; 
+        }
+    }, 100);
 }
 //gay
