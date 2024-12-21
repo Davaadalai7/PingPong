@@ -1,5 +1,5 @@
 //====================================================================================================================
-
+const ctx = gameBoard.getContext("2d");
 const computerButtom = document.createElement('button')
 const player1VSplayer2 = document.createElement('button')
 const refresh = document.createElement('button')
@@ -53,11 +53,26 @@ computerButtom.addEventListener('click', () => {
 
 
 //====================================================================================================================
+function drawBlackHole(x, y,shadow) {
+  ctx.shadowOffsetX=shadow
+  ctx.shadowOffsetY=0
+  ctx.shadowColor="gray"
+  ctx.shadowBlur=8
+  const gradient = ctx.createRadialGradient(x, y, 10, x, y, 150);
+  gradient.addColorStop(0, "rgb(2, 32, 41)");
+  gradient.addColorStop(0.5, "rgb(11, 46, 56)");
+  gradient.addColorStop(1, "rgb(160, 235, 252)");
 
+  ctx.beginPath();
+  ctx.ellipse(x, y, 30, 150, 0, 0, 2 * Math.PI);
+  ctx.closePath();
+  ctx.fillStyle=gradient
+  ctx.fill();
+  ctx.shadowColor="rgb(0,0,0)"
+}
 
 function player (){
   const gameBoard = document.querySelector("#gameBoard");
-const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#scoreText");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
@@ -111,6 +126,8 @@ function gameStart() {
 function nextTick() {
     intervalID = setTimeout(() => {
         clearBoard();
+        drawBlackHole(0,gameHeight/2,-10)
+        drawBlackHole(gameWidth,gameHeight/2,10)
         drawPaddles();
         moveBall();
         drawBall(ballX, ballY);
@@ -191,6 +208,7 @@ function drawBall(ballX, ballY) {
   ctx.fillStyle = ballGradient;
   ctx.fill();
 }
+
 
 function checkCollision() {
   if (ballY <= 0 + ballRadius) {
@@ -384,7 +402,6 @@ function bot(){
 
 //====================================================================================================================
 const gameBoard = document.querySelector("#gameBoard");
-const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#scoreText");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
@@ -437,6 +454,8 @@ function gameStart() {
 function nextTick() {
   intervalID = setTimeout(() => {
     clearBoard();
+    drawBlackHole(0,gameHeight/2,-10);
+    drawBlackHole(gameWidth,gameHeight/2,10);
     drawPaddles();
     moveBall();
     drawBall(ballX, ballY); // Draw ball and trail
