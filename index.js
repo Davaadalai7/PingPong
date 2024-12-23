@@ -1,13 +1,24 @@
 const gameContainer = document.getElementById("gameContainer")
-const gameBoard = document.querySelector("#gameBoard");
-const scoreText = document.querySelector("#scoreText");
-const gameWidth = gameBoard.width;
-const gameHeight = gameBoard.height;
+const canvas = document.createElement('canvas')
+const ctx = canvas.getContext("2d");
+canvas.id = "gameBoard"
+canvas.width = 1000
+canvas.height = 500
+const scoreDiv = document.createElement('div')
+const gameWidth = canvas.width;
+const gameHeight = canvas.height;
 const boardBackground = "black";
 const paddle1Color = "lightblue";
 const paddle2Color = "red";
 const paddleBorder = "black";
 const ballRadius = 12.5;
+const computerButtom = document.createElement('button')
+const player1VSplayer2 = document.createElement('button')
+const refresh = document.createElement('button')
+const reset = document.createElement('button')
+const buttonsDiv = document.createElement('div')
+const soundScore = document.createElement("audio")
+const soundBounce = document.createElement("audio")
 let intervalID;
 let ballSpeed;
 let ballX = gameWidth / 2;
@@ -29,20 +40,14 @@ let paddle2 = {
     x: gameWidth - paddleMargin - 10,
     y: gameHeight / 2 - 50
 };
-const soundScore = document.createElement("audio")
+
+scoreDiv.id = "scoreText"
+scoreDiv.innerHTML = "0 : 0"
+
 soundScore.id = "scoreSound"
 soundScore.src = "score.mp3"
-gameContainer.appendChild(soundScore)
-const soundBounce = document.createElement("audio")
 soundBounce.id = "bounceSound"
 soundBounce.src = "hit.mp3"
-gameContainer.appendChild(soundBounce)
-const ctx = gameBoard.getContext("2d");
-const computerButtom = document.createElement('button')
-const player1VSplayer2 = document.createElement('button')
-const refresh = document.createElement('button')
-const reset = document.createElement('button')
-const buttonsDiv = document.createElement('div')
 buttonsDiv.style.display = 'flex'
 buttonsDiv.style.gap = '20px'
 reset.innerHTML = 'reset'
@@ -57,10 +62,14 @@ let ballTrail = [];
 let paddleSpeed = 8;
 let paddle1SpeedY = 0;
 let paddle2SpeedY = 0;
-
-document.getElementById('gameContainer').appendChild(buttonsDiv)
 buttonsDiv.appendChild(player1VSplayer2)
 buttonsDiv.appendChild(computerButtom)
+gameContainer.appendChild(canvas)
+gameContainer.appendChild(scoreDiv)
+gameContainer.appendChild(soundScore)
+gameContainer.appendChild(soundBounce)
+gameContainer.appendChild(buttonsDiv)
+
 
 player1VSplayer2.addEventListener('click', () => {
     buttonsDiv.appendChild(refresh)
@@ -82,20 +91,13 @@ computerButtom.addEventListener('click', () => {
     player1VSplayer2.id = 'hid'
     bot()
     player1VSplayer2.disabled = true;
-    /*   setTimeout(() => {
-        computerFunction();
-      }, 1000); */
     refresh.addEventListener('click', () => {
         function reloadPage() {
             location.reload();
         } reloadPage()
     })
 });
-function drawBlackHole(x, y, shadow) {
-    ctx.shadowOffsetX = shadow
-    ctx.shadowOffsetY = 0
-    ctx.shadowColor = "gray"
-    ctx.shadowBlur = 8
+function drawBlackHole(x, y) {
     const gradient = ctx.createRadialGradient(x, y, 10, x, y, 150);
     gradient.addColorStop(0, "rgb(2, 32, 41)");
     gradient.addColorStop(0.5, "rgb(11, 46, 56)");
@@ -106,7 +108,6 @@ function drawBlackHole(x, y, shadow) {
     ctx.closePath();
     ctx.fillStyle = gradient
     ctx.fill();
-    ctx.shadowColor = "rgb(0,0,0)"
 }
 function gameStart() {
     createBall();
@@ -115,8 +116,8 @@ function gameStart() {
 function nextTick() {
     intervalID = setTimeout(() => {
         clearBoard();
-        drawBlackHole(0, gameHeight / 2, -10)
-        drawBlackHole(gameWidth, gameHeight / 2, 10)
+        drawBlackHole(0, gameHeight / 2)
+        drawBlackHole(gameWidth, gameHeight / 2)
         drawPaddles();
         moveBall();
         drawBall(ballX, ballY);
@@ -139,7 +140,7 @@ function drawPaddles() {
     ctx.strokeRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
 }
 function createBall() {
-    ballSpeed = 20;
+    ballSpeed = 10;
     if (Math.round(Math.random()) == 1) {
         ballXDirection = 1;
     } else {
@@ -273,7 +274,7 @@ function changeDirection(event) {
 }
 function changeDirectionMouse(event) {
 
-    document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
+    canvas.addEventListener('mousemove', (e) => {
 
         const mouseY = e.clientY;
         paddle1.y = mouseY -170;
@@ -318,11 +319,10 @@ function updatePaddlePosition() {
 }
 /* document.addEventListener('keydown', changeDirection); */
 document.addEventListener('keyup', stopPaddleMovement);
-
 requestAnimationFrame(updatePaddlePosition);
 
 function updateScore() {
-    scoreText.textContent = `${player1Score} : ${player2Score}`;
+  scoreDiv.textContent = `${player1Score} : ${player2Score}`;
 }
 function resetGame() {
     player1Score = 0;
