@@ -1,3 +1,6 @@
+const gameContainer = document.getElementById('gameContainer')
+const canvas = document.createElement('canvas')
+const scoreDiv = document.createElement('div')
 const computerButtom = document.createElement('button')
 const player1VSplayer2 = document.createElement('button')
 const refresh = document.createElement('button')
@@ -5,6 +8,11 @@ const reset = document.createElement('button')
 reset.innerHTML = 'reset'
  reset.id = 'resetBtn'
 
+ canvas.id ="gameBoard"
+ canvas.width = '1000'
+ canvas.height = '500'
+ scoreDiv.id = 'scoreText'
+ scoreDiv.innerHTML = '0 : 0'
 refresh.innerHTML = 'back'
 refresh.id = 'resetBtn'
 computerButtom.innerHTML = 'player VS computer'
@@ -12,12 +20,15 @@ computerButtom.id = 'botAndPlayer'
 player1VSplayer2.id = 'botAndPlayer'
 player1VSplayer2.innerHTML = 'player VS player'
 
-document.getElementById('gameContainer').appendChild(computerButtom)
-document.getElementById('gameContainer').appendChild(player1VSplayer2)
+gameContainer.appendChild(canvas)
+document.getElementById('game')
+gameContainer.appendChild(computerButtom)
+gameContainer.appendChild(player1VSplayer2)
+
 
 player1VSplayer2.addEventListener('click', () => {
-  document.getElementById('gameContainer').appendChild(reset)
-  document.getElementById('gameContainer').appendChild(refresh)
+  gameContainer.appendChild(reset)
+  gameContainer.appendChild(refresh)
   player1VSplayer2.id = 'hid'
   computerButtom.id = 'hid'
   player()
@@ -29,8 +40,8 @@ player1VSplayer2.addEventListener('click', () => {
   })
 });
 computerButtom.addEventListener('click', () => {
-  document.getElementById('gameContainer').appendChild(reset)
-  document.getElementById('gameContainer').appendChild(refresh)
+  gameContainer.appendChild(reset)
+  gameContainer.appendChild(refresh)
   computerButtom.id = 'hid'
   player1VSplayer2.id = 'hid'
   bot()
@@ -300,7 +311,7 @@ function bot() {
 
 
   function updateScore() {
-    scoreText.textContent = `${player1Score} : ${player2Score}`;
+    scoreDiv.textContent = `${player1Score} : ${player2Score}`;
   }
 
   function resetGame() {
@@ -583,7 +594,7 @@ function player() {
 
 
   function updateScore() {
-    scoreText.textContent = `${player1Score} : ${player2Score}`;
+    scoreDiv.textContent = `${player1Score} : ${player2Score}`;
   }
 
   function resetGame() {
