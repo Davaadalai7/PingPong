@@ -1,64 +1,72 @@
-body{
+body {
     background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Courier, monospace;
 }
-@property --angle{
+
+@property --angle {
     syntax: "<angle>";
     initial-value: 0deg;
     inherits: false;
 }
-#start{
+
+#start {
     width: 500px;
     height: 400px;
-    background-image: conic-gradient(from var(--angle),transparent 70%,rgb(2, 2, 97),rgb(249, 250, 217));
+    background-image: conic-gradient(from var(--angle), transparent 70%, rgb(2, 2, 97), rgb(249, 250, 217));
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: spin 8s  infinite linear;
+    animation: spin 8s infinite linear;
 }
+
 @keyframes spin {
     from {
-        --angle:0deg
+        --angle: 0deg
     }
+
     to {
-        --angle:360deg
+        --angle: 360deg
     }
 }
-#container{
+
+#container {
     background-image: url("background.jpeg");
     background-size: 100% 100%;
     width: 98%;
     height: 98%;
     border-radius: 10px;
-    overflow: hidden; 
-    
+    overflow: hidden;
+
 }
-#gameName{
+
+#gameName {
     color: white;
     width: fit-content;
     margin: 20px auto;
 }
-.login{
+
+.login {
     background-color: rgba(64, 57, 57, 0.5);
     color: white;
     margin: 50px auto;
     width: 40%;
     height: 50%;
     border-radius: 15px;
-    display: none;
 }
-.buttonContainer{
+
+.buttonContainer {
     width: 50%;
     margin: 50px auto;
     display: flex;
     justify-content: space-around;
     display: none;
 }
-.playerNumber{
+
+.playerNumber {
     background-color: rgba(64, 57, 57, 0.5);
     border: none;
     font-size: 20px;
@@ -67,16 +75,54 @@ body{
     color: white;
     padding: 5px;
 }
-input{
-    background-color:  rgba(18, 14, 14, 0.5);
+
+input {
+    background-color: rgba(18, 14, 14, 0.5);
     color: white;
     border: none;
     border-radius: 5px;
     margin: 0 0 5px 50px;
     width: 60px;
 }
-.login p{
+
+.login p {
     margin: 15px 0 5px 10px;
 }
 
+.radio-label {
+    width: 100px;
+    height: 100px;
+}
 
+.radio-label img {
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    border-radius: 5px;
+    border-color: blue;
+}
+
+.radio-label input {
+    display: none;
+}
+
+#profile {
+    width: 80px;
+    height: 80px;
+    margin: 20px auto;
+}
+
+#profile img {
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    border-radius: 50%;
+}
+
+#editProfile {
+    width: 220px;
+    display: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 30px auto;
+}
