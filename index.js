@@ -320,11 +320,11 @@ function bot() {
   function updateScore() {
 
     scoreDiv.textContent = `${player1Score} : ${player2Score}`
-    if(player2Score <= 11){
+    if(player2Score >= 11){
       scoreDiv.textContent =  'computer win' 
 
     }
-    if(player1Score <= 11){
+    if(player1Score >= 11){
       scoreDiv.textContent = 'player win' 
     }
   
@@ -611,11 +611,11 @@ function player() {
   function updateScore() {
     scoreDiv.textContent = `${player1Score} : ${player2Score}`;
     if(player2Score = 11){
-      scoreDiv.textContent <= player2Score = 'computer 2 win'
+      scoreDiv.textContent >= player2Score = 'computer 2 win'
       
    }
    if(player1Score = 11){
-     scoreDiv.textContent <= player2Score = 'player 1 win' }
+     scoreDiv.textContent >= player2Score = 'player 1 win' }
   }
 
   function resetGame() {
