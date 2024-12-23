@@ -1,3 +1,4 @@
+
 const gameContainer = document.getElementById('gameContainer')
 const canvas = document.createElement('canvas')
 const scoreDiv = document.createElement('div')
@@ -5,6 +6,8 @@ const computerButtom = document.createElement('button')
 const player1VSplayer2 = document.createElement('button')
 const refresh = document.createElement('button')
 const reset = document.createElement('button')
+const buttonDiv = document.createElement('div')
+
 reset.innerHTML = 'reset'
  reset.id = 'resetBtn'
 
@@ -19,16 +22,20 @@ computerButtom.innerHTML = 'player VS computer'
 computerButtom.id = 'botAndPlayer'
 player1VSplayer2.id = 'botAndPlayer'
 player1VSplayer2.innerHTML = 'player VS player'
+buttonDiv.style.display = 'flex'
+buttonDiv.style.gap = '20px'
 
 gameContainer.appendChild(canvas)
+gameContainer.appendChild(scoreDiv)
+gameContainer.appendChild(buttonDiv)
 document.getElementById('game')
-gameContainer.appendChild(computerButtom)
-gameContainer.appendChild(player1VSplayer2)
+buttonDiv.appendChild(computerButtom)
+buttonDiv.appendChild(player1VSplayer2)
 
 
 player1VSplayer2.addEventListener('click', () => {
-  gameContainer.appendChild(reset)
-  gameContainer.appendChild(refresh)
+  buttonDiv.appendChild(reset)
+  buttonDiv.appendChild(refresh)
   player1VSplayer2.id = 'hid'
   computerButtom.id = 'hid'
   player()
@@ -40,8 +47,8 @@ player1VSplayer2.addEventListener('click', () => {
   })
 });
 computerButtom.addEventListener('click', () => {
-  gameContainer.appendChild(reset)
-  gameContainer.appendChild(refresh)
+  buttonDiv.appendChild(reset)
+  buttonDiv.appendChild(refresh)
   computerButtom.id = 'hid'
   player1VSplayer2.id = 'hid'
   bot()
@@ -311,7 +318,16 @@ function bot() {
 
 
   function updateScore() {
-    scoreDiv.textContent = `${player1Score} : ${player2Score}`;
+
+    scoreDiv.textContent = `${player1Score} : ${player2Score}`
+    if(player2Score == 11){
+      scoreDiv.textContent = player2Score = 'computer win' 
+
+    }
+    if(player1Score == 11){
+      scoreDiv.textContent = player2Score = 'player win' 
+    }
+  
   }
 
   function resetGame() {
@@ -340,9 +356,8 @@ function bot() {
   }
   //=========================tttt
 
-  function computerFunction() {
 
-  }
+  
   //=========================tttt
 }
 function player() {
@@ -595,6 +610,12 @@ function player() {
 
   function updateScore() {
     scoreDiv.textContent = `${player1Score} : ${player2Score}`;
+    if(player2Score = 11){
+      scoreDiv.textContent = player2Score = 'computer 2 win'
+      
+   }
+   if(player1Score = 11){
+     scoreDiv.textContent = player2Score = 'player 1 win' }
   }
 
   function resetGame() {
