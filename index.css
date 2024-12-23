@@ -92,4 +92,4 @@ paddle {
 #botAndPlayer:hover {
     box-shadow: 0 0 20px #00FFFF, 0 0 30px #00FFFF; /* Stronger glow on hover */
     transform: scale(1.1); /* Slightly enlarge the button on hover */
-}
+
