@@ -247,7 +247,7 @@ function checkCollision() {
 function increaseBallSpeed() {
     ballSpeed += 2;
     if (ballSpeed > 100) {
-        ballSpeed = 15;
+        ballSpeed = 18;
     }
 }
 function changeDirection(event) {
@@ -379,3 +379,5 @@ function bot() {
     requestAnimationFrame(updatePaddlePosition);
 
 }
+
+
