@@ -1,25 +1,37 @@
 //====================================================================================================================
 
+const gameContainer = document.getElementById('gameContainer')
+const canvas = document.createElement('canvas')
+const scoreDiv = document.createElement('div')
 const computerButtom = document.createElement('button')
 const player1VSplayer2 = document.createElement('button')
 const refresh = document.createElement('button')
 const reset = document.createElement('button')
-const buttonsDiv = document.createElement('div')
+const buttonDiv = document.createElement('div'))
 
-buttonsDiv.style.display = 'flex'
-buttonsDiv.style.gap = '20px'
 reset.innerHTML = 'reset'
-reset.id = 'resetBtn'
+ reset.id = 'resetBtn'
+
+ canvas.id ="gameBoard"
+ canvas.width = '1000'
+ canvas.height = '500'
+ scoreDiv.id = 'scoreText'
+ scoreDiv.innerHTML = '0 : 0'
 refresh.innerHTML = 'back'
 refresh.id = 'resetBtn'
 computerButtom.innerHTML = 'player VS computer'
 computerButtom.id = 'botAndPlayer'
 player1VSplayer2.id = 'botAndPlayer'
 player1VSplayer2.innerHTML = 'player VS player'
+buttonDiv.style.display = 'flex'
+buttonDiv.style.gap = '20px'
 
-document.getElementById('gameContainer').appendChild(buttonsDiv)
-buttonsDiv.appendChild(player1VSplayer2)
-buttonsDiv.appendChild(computerButtom)
+gameContainer.appendChild(canvas)
+gameContainer.appendChild(scoreDiv)
+gameContainer.appendChild(buttonDiv)
+document.getElementById('game')
+buttonDiv.appendChild(computerButtom)
+buttonDiv.appendChild(player1VSplayer2)
 
 player1VSplayer2.addEventListener('click', () => {
   buttonsDiv.appendChild(refresh)
@@ -338,7 +350,16 @@ document.addEventListener("keyup", stopPaddleMovement);
 requestAnimationFrame(updatePaddlePosition);
 
 function updateScore() {
-  scoreText.textContent = `${player1Score} : ${player2Score}`;
+    scoreDiv.textContent = `${player1Score} : ${player2Score}`;
+    if(player2Score >= 11){
+      scoreDiv.textContent =  'computer win'
+      stopBall = 0   
+   }
+  
+   if(player1Score >= 11){
+     scoreDiv.textContent = 'player 1 win' 
+     stopBall = 0}
+  
 }
 
 function resetGame() {
@@ -650,6 +671,18 @@ requestAnimationFrame(updatePaddlePosition);
 
 function updateScore() {
   scoreText.textContent = `${player1Score} : ${player2Score}`;
+  if(player2Score >= 11){
+      scoreDiv.textContent =  'computer win' 
+      stopBall = 0
+    }
+
+    if(player1Score >= 11){
+      scoreDiv.textContent =  'player win' 
+      stopBall = 0
+    }
+
+  
+  }
 }
 
 function resetGame() {
