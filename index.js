@@ -71,15 +71,12 @@ computerButtom.addEventListener('click', () => {
 function player() {
   const gameBoard = document.querySelector("#gameBoard");
   const ctx = gameBoard.getContext("2d");
-  const scoreText = document.querySelector("#scoreText");
   const gameWidth = gameBoard.width;
   const gameHeight = gameBoard.height;
   const boardBackground = "black";
   const paddle1Color = "lightblue";
   const paddle2Color = "red";
   const paddleBorder = "black";
-  const ballColor = "blue"; // Ball color is now blue
-  const shadowColor = "red"; // Shadow color is now red
   const ballRadius = 12.5;
   let intervalID;
   let ballSpeed;
@@ -115,7 +112,18 @@ function player() {
   reset.addEventListener("click", resetGame);
 
   gameStart();
+  function drawBlackHole(x, y) {
+    const gradient = ctx.createRadialGradient(x, y, 10, x, y, 150);
+    gradient.addColorStop(0, "rgb(2, 32, 41)");
+    gradient.addColorStop(0.5, "rgb(11, 46, 56)");
+    gradient.addColorStop(1, "rgb(160, 235, 252)");
 
+    ctx.beginPath();
+    ctx.ellipse(x, y, 30, 150, 0, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fillStyle = gradient
+    ctx.fill();
+}
   function gameStart() {
     createBall();
     nextTick();
@@ -124,6 +132,8 @@ function player() {
   function nextTick() {
     intervalID = setTimeout(() => {
       clearBoard();
+      drawBlackHole(0, gameHeight / 2)
+      drawBlackHole(gameWidth, gameHeight / 2)
       drawPaddles();
       moveBall();
       drawBall(ballX, ballY);
@@ -138,15 +148,45 @@ function player() {
   }
 
   function drawPaddles() {
-    ctx.strokeStyle = paddleBorder;
-    ctx.fillStyle = paddle1Color;
+    const paddle1Gradient = ctx.createLinearGradient(paddle1.x, paddle1.y, paddle1.x + paddle1.width, paddle1.y + paddle1.height);
+    paddle1Gradient.addColorStop(0, "rgba(44, 62, 80, 1)"); // Deep space color
+    paddle1Gradient.addColorStop(0.5, "rgba(65, 245, 39, 0"); // Purple glow
+    paddle1Gradient.addColorStop(1, "rgba(26, 188, 156, 1)"); // Greenish glow
+    
+    ctx.fillStyle = paddle1Gradient;
     ctx.fillRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
-    ctx.strokeRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
+    
+    for (let i = 0; i < 10; i++) {
+        const starX = paddle1.x + Math.random() * paddle1.width;
+        const starY = paddle1.y + Math.random() * paddle1.height;
+        const starSize = Math.random() * 3;
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.beginPath();
+        ctx.arc(starX, starY, starSize, 0, 2 * Math.PI);
+        ctx.fill();
+    }
 
-    ctx.fillStyle = paddle2Color;
+    const paddle2Gradient = ctx.createLinearGradient(paddle2.x, paddle2.y, paddle2.x + paddle2.width, paddle2.y + paddle2.height);
+    paddle2Gradient.addColorStop(0, "rgba(44, 62, 80, 1)"); // Deep space color
+    paddle2Gradient.addColorStop(0.5, "rgba(231, 76, 60, 1)"); // Reddish glow
+    paddle2Gradient.addColorStop(1, "rgba(241, 196, 15, 1)"); // Yellowish glow
+    
+    ctx.fillStyle = paddle2Gradient;
     ctx.fillRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
+    
+    for (let i = 0; i < 10; i++) {
+        const starX = paddle2.x + Math.random() * paddle2.width;
+        const starY = paddle2.y + Math.random() * paddle2.height;
+        const starSize = Math.random() * 3;
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.beginPath();
+        ctx.arc(starX, starY, starSize, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
+    ctx.strokeRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
     ctx.strokeRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
-  }
+}
 
   function createBall() {
     ballSpeed = 3;
@@ -452,6 +492,18 @@ function bot() {
 
   gameStart();
 
+function drawBlackHole(x, y) {
+  const gradient = ctx.createRadialGradient(x, y, 10, x, y, 150);
+  gradient.addColorStop(0, "rgb(2, 32, 41)");
+  gradient.addColorStop(0.5, "rgb(11, 46, 56)");
+  gradient.addColorStop(1, "rgb(160, 235, 252)");
+
+  ctx.beginPath();
+  ctx.ellipse(x, y, 30, 150, 0, 0, 2 * Math.PI);
+  ctx.closePath();
+  ctx.fillStyle = gradient
+  ctx.fill();
+}
   function gameStart() {
     createBall();
     nextTick();
@@ -460,6 +512,8 @@ function bot() {
   function nextTick() {
     intervalID = setTimeout(() => {
       clearBoard();
+      drawBlackHole(0, gameHeight / 2)
+      drawBlackHole(gameWidth, gameHeight / 2)
       drawPaddles();
       moveBall();
       drawBall(ballX, ballY); // Draw ball and trail
@@ -474,16 +528,46 @@ function bot() {
   }
 
   function drawPaddles() {
-    ctx.strokeStyle = paddleBorder;
-
-    ctx.fillStyle = paddle1Color;
+    const paddle1Gradient = ctx.createLinearGradient(paddle1.x, paddle1.y, paddle1.x + paddle1.width, paddle1.y + paddle1.height);
+    paddle1Gradient.addColorStop(0, "rgba(44, 62, 80, 1)"); // Deep space color
+    paddle1Gradient.addColorStop(0.5, "rgba(65, 245, 39, 0"); // Purple glow
+    paddle1Gradient.addColorStop(1, "rgba(26, 188, 156, 1)"); // Greenish glow
+    
+    ctx.fillStyle = paddle1Gradient;
     ctx.fillRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
-    ctx.strokeRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
+    
+    for (let i = 0; i < 10; i++) {
+        const starX = paddle1.x + Math.random() * paddle1.width;
+        const starY = paddle1.y + Math.random() * paddle1.height;
+        const starSize = Math.random() * 3;
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.beginPath();
+        ctx.arc(starX, starY, starSize, 0, 2 * Math.PI);
+        ctx.fill();
+    }
 
-    ctx.fillStyle = paddle2Color;
+    const paddle2Gradient = ctx.createLinearGradient(paddle2.x, paddle2.y, paddle2.x + paddle2.width, paddle2.y + paddle2.height);
+    paddle2Gradient.addColorStop(0, "rgba(44, 62, 80, 1)"); // Deep space color
+    paddle2Gradient.addColorStop(0.5, "rgba(231, 76, 60, 1)"); // Reddish glow
+    paddle2Gradient.addColorStop(1, "rgba(241, 196, 15, 1)"); // Yellowish glow
+    
+    ctx.fillStyle = paddle2Gradient;
     ctx.fillRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
+    
+    for (let i = 0; i < 10; i++) {
+        const starX = paddle2.x + Math.random() * paddle2.width;
+        const starY = paddle2.y + Math.random() * paddle2.height;
+        const starSize = Math.random() * 3;
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.beginPath();
+        ctx.arc(starX, starY, starSize, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
+    ctx.strokeRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
     ctx.strokeRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
-  }
+}
 
   function createBall() {
     ballSpeed = 3;
@@ -621,9 +705,9 @@ function bot() {
 
     setInterval(() => {
       if (ballY < paddle2.y + paddle2.height / 2) {
-        paddle2.y -= 12 * stopBall
+        paddle2.y -= paddleSpeed * stopBall
       } else if (ballY > paddle2.y + paddle2.height / 2) {
-        paddle2.y += 12 * stopBall
+        paddle2.y += paddleSpeed * stopBall
       }
     }, 100);
   }
