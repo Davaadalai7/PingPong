@@ -8,6 +8,7 @@ const player1VSplayer2 = document.createElement('button')
 const refresh = document.createElement('button')
 const reset = document.createElement('button')
 const buttonDiv = document.createElement('div')
+let stopBall = 1
 
 reset.innerHTML = 'reset'
 reset.id = 'resetBtn'
@@ -58,7 +59,7 @@ computerButtom.addEventListener('click', () => {
     }, 1000); */
   refresh.addEventListener('click', () => {
     function reloadPage() {
-      location.reload();
+      history.go(0);
     } reloadPage()
   })
 });
@@ -165,8 +166,8 @@ function player() {
   }
 
   function moveBall() {
-    ballX += ballSpeed * ballXDirection;
-    ballY += ballSpeed * ballYDirection;
+    ballX += (ballSpeed * ballXDirection) * stopBall
+    ballY += (ballSpeed * ballYDirection) * stopBall
   }
 
   function drawBall(ballX, ballY) {
@@ -275,26 +276,26 @@ function player() {
 
     switch (keyPressed) {
       case paddle1Up:
-        paddle1SpeedY = -paddleSpeed;
+        paddle1SpeedY = -paddleSpeed * stopBall
         break;
       case paddle1Down:
-        paddle1SpeedY = paddleSpeed;
+        paddle1SpeedY = paddleSpeed * stopBall
         break;
       case paddle2Up:
-        paddle2SpeedY = -paddleSpeed;
+        paddle2SpeedY = -paddleSpeed * stopBall
         break;
       case paddle2Down:
-        paddle2SpeedY = paddleSpeed;
+        paddle2SpeedY = paddleSpeed * stopBall
         break;
     }
   }
 
   function stopPaddleMovement(event) {
     const keyPressed = event.keyCode;
-    const paddle1Up = 87;
-    const paddle1Down = 83;
-    const paddle2Up = 38;
-    const paddle2Down = 40;
+    const paddle1Up = 87; //w
+    const paddle1Down = 83; //s
+    const paddle2Up = 38; //^
+    const paddle2Down = 40;//v
 
     switch (keyPressed) {
       case paddle1Up:
@@ -503,8 +504,8 @@ function bot() {
   }
 
   function moveBall() {
-    ballX += ballSpeed * ballXDirection;
-    ballY += ballSpeed * ballYDirection;
+    ballX += ballSpeed * ballXDirection * stopBall
+    ballY += ballSpeed * ballYDirection * stopBall
     console.log("Ball moved to:", ballX, ballY); // Debugging line
   }
 
@@ -613,16 +614,16 @@ function bot() {
     document.getElementById("gameBoard").addEventListener('mousemove', (e) => {
 
       const mouseY = e.clientY;
-      paddle1.y = mouseY - 220;
+      paddle1.y = (mouseY - 220) * stopBall
 
     });
 
 
     setInterval(() => {
       if (ballY < paddle2.y + paddle2.height / 2) {
-        paddle2.y -= 12;
+        paddle2.y -= 12 * stopBall
       } else if (ballY > paddle2.y + paddle2.height / 2) {
-        paddle2.y += 12;
+        paddle2.y += 12 * stopBall
       }
     }, 100);
   }
@@ -675,6 +676,7 @@ function bot() {
     if (player2Score >= 11) {
       scoreDiv.textContent = 'computer win'
       stopBall = 0
+      
     }
 
     if (player1Score >= 11) {
