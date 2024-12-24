@@ -39,7 +39,7 @@
   position: absolute;
   display: none;
 }
-.buttonDiv{
+#buttonDiv{
   display: flex;
   position: absolute;
   gap: 20px;
@@ -68,12 +68,6 @@
   transform: scale(1.1);
 }
 
-/* Paddle styles */
-paddle {
-  fill: #00ffff;
-  stroke: #00ffff;
-  box-shadow: 0 0 15px 5px rgba(0, 255, 255, 0.7);
-}
 
 /* Ball */
 #ball {
