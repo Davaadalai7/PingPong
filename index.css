@@ -24,6 +24,8 @@
   box-shadow: 0 0 15px 5px rgba(0, 255, 255, 0.7);
   background-color: black;
   margin-bottom: 20px;
+  position: absolute;
+  display: none;
 }
 
 /* Score text */
@@ -34,6 +36,15 @@
   text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6),
     0 0 60px rgba(0, 255, 255, 0.5);
   margin: 20px 0;
+  position: absolute;
+  display: none;
+}
+.buttonDiv{
+  display: flex;
+  position: absolute;
+  gap: 20px;
+  top: 700px;
+  display: none;
 }
 
 /* Reset button */

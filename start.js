@@ -14,13 +14,18 @@ let player2Name = "player 2"
 const buttonContainer = document.createElement("div")
 buttonContainer.className = "buttonContainer"
 const onePlayerButton = document.createElement("button")
-onePlayerButton.className = "playerNumber"
+onePlayerButton.className = "playerChooseButton"
 onePlayerButton.innerText = "one player"
+onePlayerButton.addEventListener("click",()=>{
+
+})
 
 const twoPlayerButton = document.createElement("button")
-twoPlayerButton.className = "playerNumber"
+twoPlayerButton.className = "playerChooseButton"
 twoPlayerButton.innerText = "two player"
+twoPlayerButton.addEventListener("click",()=>{
 
+})
 
 buttonContainer.appendChild(onePlayerButton)
 buttonContainer.appendChild(twoPlayerButton)
@@ -31,7 +36,6 @@ function loginOpen(imageUrl,inputId,imgId){
 const logIn = document.createElement("div");
 logIn.className = "login";
 const headerLogin = document.createElement("h3");
-headerLogin.id = "gameName";
 headerLogin.innerText = "LOGIN"
 logIn.appendChild(headerLogin)
 let profileChosen = chosenImage(imageUrl,imgId)
@@ -51,7 +55,7 @@ logIn.appendChild(profileChosen)
 logIn.appendChild(nickname);
 logIn.appendChild(nicknameInput)
 
-return {container:logIn,image:imageUrl}
+return {container:logIn,image:profileChosen.src}
 
 }
 const logInContainer=document.createElement("div")
@@ -89,6 +93,10 @@ function chosenImage(imageUrl,imgId) {
   imagePro.id = imgId
   imagePro.src = imageUrl
   return imagePro
+}
+
+function checkNickname(){
+
 }
 
 

@@ -1,4 +1,4 @@
-const gameContainer = document.getElementById("gameContainer")
+const start = document.getElementById("start")
 const canvas = document.createElement('canvas')
 const ctx = canvas.getContext("2d");
 canvas.id = "gameBoard"
@@ -48,8 +48,7 @@ soundScore.id = "scoreSound"
 soundScore.src = "score.mp3"
 soundBounce.id = "bounceSound"
 soundBounce.src = "hit.mp3"
-buttonsDiv.style.display = 'flex'
-buttonsDiv.style.gap = '20px'
+buttonsDiv.className = "buttonDiv"
 reset.innerHTML = 'reset'
 reset.id = 'resetBtn'
 refresh.innerHTML = 'back'
@@ -64,11 +63,11 @@ let paddle1SpeedY = 0;
 let paddle2SpeedY = 0;
 buttonsDiv.appendChild(player1VSplayer2)
 buttonsDiv.appendChild(computerButtom)
-gameContainer.appendChild(canvas)
-gameContainer.appendChild(scoreDiv)
-gameContainer.appendChild(soundScore)
-gameContainer.appendChild(soundBounce)
-gameContainer.appendChild(buttonsDiv)
+start.appendChild(canvas)
+start.appendChild(scoreDiv)
+start.appendChild(soundScore)
+start.appendChild(soundBounce)
+start.appendChild(buttonsDiv)
 
 
 player1VSplayer2.addEventListener('click', () => {
