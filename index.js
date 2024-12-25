@@ -55,7 +55,8 @@ onePlayerButton.addEventListener("click", () => {
   startButton.style.display = "block"
 
 })
-
+let player1Nickname;
+let player2Nickname;
 const twoPlayerButton = document.createElement("button")
 twoPlayerButton.className = "playerChooseButton"
 twoPlayerButton.innerText = "two player"
@@ -68,8 +69,8 @@ twoPlayerButton.addEventListener("click", () => {
   logInContainer.style.display = "flex"
   backButton.style.display = "block"
   startButton.addEventListener(("click"),()=>{
-    console.log(document.getElementById("nicknamePlayer2").value);
-    console.log(document.getElementById("nicknamePlayer1").value);
+    player1Nickname=document.getElementById("nicknamePlayer1").value
+    player2Nickname=document.getElementById("nicknamePlayer2").value
     if(testNickname(document.getElementById("nicknamePlayer1").value)&&testNickname(document.getElementById("nicknamePlayer1").value)){
       startButton.style.display = "none"
       backButton.style.display = "none"
@@ -176,8 +177,7 @@ function testNickname(input){
     return true
   }else return false
 }
-const player1Nickname=document.getElementById("nicknamePlayer2")
-const player2Nickname=document.getElementById("nicknamePlayer2")
+
 
 
 
@@ -435,7 +435,9 @@ function checkCollision() {
     }
     if (ballX <= 0) {
         player2Score += 1;
-        updateScore();
+        updateScore(player1Nickname,player2Nickname);
+        console.log(player1Nickname);
+        console.log(player2Nickname);
         createBall();
         increaseBallSpeed();
         playSound("scoreSound");
@@ -443,7 +445,9 @@ function checkCollision() {
     }
     if (ballX >= gameWidth) {
         player1Score += 1;
-        updateScore();
+        updateScore(player1Nickname,player2Nickname);
+        console.log(player1Nickname);
+        console.log(player2Nickname);
         createBall();
         increaseBallSpeed();
         playSound("scoreSound");
@@ -541,16 +545,16 @@ function updatePaddlePosition() {
 document.addEventListener('keyup', stopPaddleMovement);
 requestAnimationFrame(updatePaddlePosition);
 
-function updateScore() {
+function updateScore(nicknamePlayer1,nicknamePlayer2) {
   scoreDiv.textContent = `${player1Score} : ${player2Score}`;
   if (player2Score >= 11) {
-    scoreDiv.textContent = 'player2 win'
+    scoreDiv.textContent = nicknamePlayer2
     stopBall = 0
     
   }
 
   if (player1Score >= 11) {
-    scoreDiv.textContent = 'player1 win'
+    scoreDiv.textContent = nicknamePlayer1
     stopBall = 0
   }
 }
