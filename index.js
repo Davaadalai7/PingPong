@@ -189,7 +189,7 @@ function player() {
 }
 
   function createBall() {
-    ballSpeed = 3;
+    ballSpeed = 6;
     if (Math.round(Math.random()) == 1) {
       ballXDirection = 1;
     } else {
@@ -393,12 +393,18 @@ function player() {
   function updateScore() {
     scoreDiv.textContent = `${player1Score} : ${player2Score}`;
     if (player2Score >= 11) {
-      scoreDiv.textContent = 'computer win'
+      scoreDiv.textContent = 'game over'
+      setTimeout(() => {
+        scoreDiv.textContent = 'player two win'
+      }, 1500);
       stopBall = 0
     }
 
     if (player1Score >= 11) {
-      scoreDiv.textContent = 'player 1 win'
+      scoreDiv.textContent = 'game over'
+      setTimeout(() => {
+        scoreDiv.textContent = 'player one win'
+      }, 1500);
       stopBall = 0
     }
 
@@ -570,7 +576,7 @@ function drawBlackHole(x, y) {
 }
 
   function createBall() {
-    ballSpeed = 3;
+    ballSpeed = 6;
     if (Math.round(Math.random()) == 1) {
       ballXDirection = 1;
     } else {
@@ -757,14 +763,20 @@ function drawBlackHole(x, y) {
 
   function updateScore() {
     scoreText.textContent = `${player1Score} : ${player2Score}`;
-    if (player2Score >= 11) {
-      scoreDiv.textContent = 'computer win'
+    if (player2Score >= 1) {
+      scoreDiv.textContent = 'game over'
+      setTimeout(() => {
+        scoreDiv.textContent = 'computer win'
+      }, 1500);
       stopBall = 0
       
     }
 
     if (player1Score >= 11) {
-      scoreDiv.textContent = 'player win'
+      scoreDiv.textContent = 'game over'
+      setTimeout(() => {
+        scoreDiv.textContent = 'player one win'
+      }, 1500);
       stopBall = 0
     }
 
