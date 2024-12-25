@@ -5,11 +5,11 @@ const logInContainer = document.createElement("div")
 logInContainer.className = "logInContainer"
 let logInPlayer1 = loginOpen("defaultProfile.jpg", "nicknamePlayer1", "player1img")
 let logInPlayer1Div = logInPlayer1.container
-const player1pro = logInPlayer1
+const player1pro = logInPlayer1.image
 
 let logInPlayer2 = loginOpen("defaultProfile.jpg", "nicknamePlayer2", "player2img")
 let logInPlayer2Div = logInPlayer2.container
-let player2Img = logInPlayer2.image
+let player2pro = logInPlayer2.image
 
 logInContainer.appendChild(logInPlayer1Div);
 logInContainer.appendChild(logInPlayer2Div);
@@ -88,39 +88,9 @@ buttonContainer.appendChild(twoPlayerButton)
 
 startPage.appendChild(buttonContainer);
 
-function loginOpen(imageUrl, inputId, imgId) {
-  const logIn = document.createElement("div");
-  logIn.className = "login";
-  const headerLogin = document.createElement("h3");
-  headerLogin.innerText = "LOGIN"
-  logIn.appendChild(headerLogin)
-  let profileChosen = chosenImage(imageUrl, imgId)
-  profileChosen.addEventListener("click", () => {
-    logInContainer.style.display = "none"
-    const editProfile = editPro(imgId).container
-    editProfile.style.display = "flex"
-    startPage.appendChild(editProfile)
-    console.log(editProfile.newImg);
-    
-    profileChosen = editProfile.newImg;
-  })
-  const nickname = document.createElement("p")
-  nickname.innerText = "Nickname:"
-  let nicknameInput = document.createElement("input")
-  nicknameInput.type = "text"
-  nicknameInput.id = inputId
-  logIn.appendChild(profileChosen)
-  logIn.appendChild(nickname);
-  logIn.appendChild(nicknameInput)
 
-  return { container: logIn, image: profileChosen }
-
-}
-
-startPage.appendChild(logInContainer)
 function imageChoices(imageUrl) {
   const img = document.createElement('img');
-  img.id = "image"
   img.src = imageUrl;
   return img;
 }
@@ -128,17 +98,19 @@ function editPro(imgId) {
   const editProfile = document.createElement("div")
   editProfile.id = "editProfile"
   const profileImg = ["profile1.jpg", "profile2.jpg", "profile3.webp", "profile4.jpg",]
-  let changeSrc = document.getElementById(imgId)
+  let changeSrc ;
   profileImg.forEach(el => {
     const edited = imageChoices(el)
     editProfile.appendChild(edited)
     edited.addEventListener("click", () => {
-      changeSrc.src = el
+      changeSrc=el
       editProfile.style.display = "none"
       logInContainer.style.display = "flex"
+      console.log(changeSrc);
+      
     })
   })
-  return { container: editProfile, newImg: changeSrc.src }
+  return { container: editProfile, newImg: changeSrc }
 }
 function chosenImage(imageUrl, imgId) {
   const imagePro = document.createElement("img")
@@ -165,6 +137,38 @@ startButton.style.display = "none"
 
 startPage.appendChild(startButton)
 startPage.appendChild(backButton)
+
+function loginOpen(imageUrl, inputId, imgId) {
+    const logIn = document.createElement("div");
+    logIn.className = "login";
+    const headerLogin = document.createElement("h3");
+    headerLogin.innerText = "LOGIN"
+    logIn.appendChild(headerLogin)
+    let profileChosen = chosenImage(imageUrl, imgId)
+    profileChosen.addEventListener("click", () => {
+      logInContainer.style.display = "none"
+      const editProfile = editPro(imgId)
+      editProfile.container.style.display = "flex"
+      startPage.appendChild(editProfile.container)
+      
+      profileChosen = chosenImage(editProfile.newImg,imgId)
+      console.log(profileChosen);
+      
+    })
+    const nickname = document.createElement("p")
+    nickname.innerText = "Nickname:"
+    let nicknameInput = document.createElement("input")
+    nicknameInput.type = "text"
+    nicknameInput.id = inputId
+    logIn.appendChild(profileChosen)
+    logIn.appendChild(nickname);
+    logIn.appendChild(nicknameInput)
+  
+    return { container: logIn, image: profileChosen.src }
+  
+  }
+  
+  startPage.appendChild(logInContainer)
 
 function testNickname(input){
   const testStr= /^[a-zA-Z0-9]+$/
@@ -223,6 +227,7 @@ let paddle2 = {
     x: gameWidth - paddleMargin - 10,
     y: gameHeight / 2 - 50
 };
+let stopBall = 1
 
 scoreDiv.id = "scoreText"
 scoreDiv.innerHTML = "0 : 0"
@@ -305,7 +310,7 @@ function clearBoard() {
     ctx.fillStyle = boardBackground;
     ctx.fillRect(0, 0, gameWidth, gameHeight);
 }
-function drawPaddles() {
+/*function drawPaddles() {
     ctx.strokeStyle = paddleBorder;
     ctx.fillStyle = paddle1Color;
     ctx.fillRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
@@ -313,6 +318,47 @@ function drawPaddles() {
 
     ctx.fillStyle = paddle2Color;
     ctx.fillRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
+    ctx.strokeRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
+}*/
+function drawPaddles() {
+    const paddle1Gradient = ctx.createLinearGradient(paddle1.x, paddle1.y, paddle1.x + paddle1.width, paddle1.y + paddle1.height);
+   
+paddle1Gradient.addColorStop(0, "rgba(44, 62, 80, 1)"); // Deep space color
+    paddle1Gradient.addColorStop(0.5, "rgba(65, 245, 39, 0"); // Purple glow
+    paddle1Gradient.addColorStop(1, "rgba(26, 188, 156, 1)"); // Greenish glow
+    
+    ctx.fillStyle = paddle1Gradient;
+    ctx.fillRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
+    
+    for (let i = 0; i < 10; i++) {
+        const starX = paddle1.x + Math.random() * paddle1.width;
+        const starY = paddle1.y + Math.random() * paddle1.height;
+        const starSize = Math.random() * 3;
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.beginPath();
+        ctx.arc(starX, starY, starSize, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+
+    const paddle2Gradient = ctx.createLinearGradient(paddle2.x, paddle2.y, paddle2.x + paddle2.width, paddle2.y + paddle2.height);
+    paddle2Gradient.addColorStop(0, "rgba(44, 62, 80, 1)"); // Deep space color
+    paddle2Gradient.addColorStop(0.5, "rgba(231, 76, 60, 1)"); // Reddish glow
+    paddle2Gradient.addColorStop(1, "rgba(241, 196, 15, 1)"); // Yellowish glow
+    
+    ctx.fillStyle = paddle2Gradient;
+    ctx.fillRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
+    
+    for (let i = 0; i < 10; i++) {
+        const starX = paddle2.x + Math.random() * paddle2.width;
+        const starY = paddle2.y + Math.random() * paddle2.height;
+        const starSize = Math.random() * 3;
+        ctx.fillStyle = "rgba(255, 255, 255, 1)";
+        ctx.beginPath();
+        ctx.arc(starX, starY, starSize, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
+    ctx.strokeRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
     ctx.strokeRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
 }
 function createBall() {
@@ -332,8 +378,8 @@ function createBall() {
     drawBall(ballX, ballY);
 }
 function moveBall() {
-    ballX += ballSpeed * ballXDirection;
-    ballY += ballSpeed * ballYDirection;
+    ballX += ballSpeed * ballXDirection*stopBall;
+    ballY += ballSpeed * ballYDirection*stopBall;
 }
 function drawBall(ballX, ballY) {
     ballTrail.push({ x: ballX, y: ballY });
@@ -374,16 +420,16 @@ function checkCollision() {
     } else if (ballY >= gameHeight - ballRadius) {
         ballYDirection *= -1;
         playSound("bounceSound");
-    } else if ((ballX <= 0 + ballRadius && ballY > gameHeight - 100 && ballY < gameHeight - ballRadius)) {
+    } else if ((ballX <= 0 + ballRadius && ballY >= gameHeight - 100 && ballY <= gameHeight - ballRadius)) {
         ballXDirection *= -1;
         playSound("bounceSound");
-    } else if ((ballX <= 0 + ballRadius && ballY < 100 && ballY > ballRadius)) {
+    } else if ((ballX <= 0 + ballRadius && ballY <= 100 && ballY >= ballRadius)) {
         ballXDirection *= -1;
         playSound("bounceSound");
-    } else if ((ballX >= gameWidth - ballRadius && ballY > gameHeight - 100 && ballY < gameHeight - ballRadius)) {
+    } else if ((ballX >= gameWidth - ballRadius && ballY >= gameHeight - 100 && ballY <= gameHeight - ballRadius)) {
         ballXDirection *= -1;
         playSound("bounceSound");
-    } else if ((ballX >= gameWidth - ballRadius && ballY < 100 && ballY > ballRadius)) {
+    } else if ((ballX >= gameWidth - ballRadius && ballY <= 100 && ballY >= ballRadius)) {
         ballXDirection *= -1;
         playSound("bounceSound");
     }
@@ -420,7 +466,7 @@ function checkCollision() {
 }
 function increaseBallSpeed() {
     ballSpeed += 2;
-    if (ballSpeed > 100) {
+    if (ballSpeed >=18) {
         ballSpeed = 18;
     }
 }
@@ -432,33 +478,33 @@ function changeDirection(event) {
     const paddle2Down = 40;
 
     switch (keyPressed) {
-        case paddle1Up:
-            paddle1SpeedY = -paddleSpeed;
-            break;
-        case paddle1Down:
-            paddle1SpeedY = paddleSpeed;
-            break;
-        case paddle2Up:
-            paddle2SpeedY = -paddleSpeed;
-            break;
-        case paddle2Down:
-            paddle2SpeedY = paddleSpeed;
-            break;
+      case paddle1Up:
+        paddle1SpeedY = -paddleSpeed * stopBall
+        break;
+      case paddle1Down:
+        paddle1SpeedY = paddleSpeed * stopBall
+        break;
+      case paddle2Up:
+        paddle2SpeedY = -paddleSpeed * stopBall
+        break;
+      case paddle2Down:
+        paddle2SpeedY = paddleSpeed * stopBall
+        break;
     }
-}
+  }
 function changeDirectionMouse(event) {
 
     canvas.addEventListener('mousemove', (e) => {
 
         const mouseY = e.clientY;
-        paddle1.y = mouseY -170;
+        paddle1.y = mouseY -170*stopBall;
 
     });
     setInterval(() => {
         if (ballY < paddle2.y + paddle2.height / 2) {
-            paddle2.y -= 12;
+            paddle2.y -= 12*stopBall;
         } else if (ballY > paddle2.y + paddle2.height / 2) {
-            paddle2.y += 12;
+            paddle2.y += 12*stopBall;
         }
     }, 100);
 }
@@ -497,6 +543,16 @@ requestAnimationFrame(updatePaddlePosition);
 
 function updateScore() {
   scoreDiv.textContent = `${player1Score} : ${player2Score}`;
+  if (player2Score >= 11) {
+    scoreDiv.textContent = 'player2 win'
+    stopBall = 0
+    
+  }
+
+  if (player1Score >= 11) {
+    scoreDiv.textContent = 'player1 win'
+    stopBall = 0
+  }
 }
 function resetGame() {
     player1Score = 0;
