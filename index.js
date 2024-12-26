@@ -46,7 +46,7 @@ player1VSplayer2.addEventListener('click', () => {
       location.reload();
     } reloadPage()
   })
-});//
+}); //
 computerButtom.addEventListener('click', () => {
   buttonDiv.appendChild(refresh)
   buttonDiv.appendChild(reset)
