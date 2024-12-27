@@ -1,6 +1,15 @@
 const startElement = document.getElementById("start");
 const startPage = document.createElement("div");
 startPage.id = "container";
+
+let logInPlayer1Div = logInPlayer1.container;
+let logInPlayer2Div = logInPlayer2.container;
+let player1Nickname;
+let player2Nickname;
+let player1Pro;
+let player2Pro;
+
+
 const logInContainer = document.createElement("div");
 logInContainer.className = "logInContainer";
 let logInPlayer1 = loginOpen(
@@ -8,17 +17,17 @@ let logInPlayer1 = loginOpen(
   "nicknamePlayer1",
   "player1img"
 );
-let logInPlayer1Div = logInPlayer1.container;
+
 
 let logInPlayer2 = loginOpen(
   "defaultProfile.jpg",
   "nicknamePlayer2",
   "player2img"
 );
-let logInPlayer2Div = logInPlayer2.container;
 
 logInContainer.appendChild(logInPlayer1Div);
 logInContainer.appendChild(logInPlayer2Div);
+
 const gameName = document.createElement("h1");
 gameName.innerText = "PONG";
 gameName.id = "gameName";
@@ -32,10 +41,16 @@ const onePlayerButton = document.createElement("button");
 onePlayerButton.className = "playerChooseButton";
 onePlayerButton.innerText = "one player";
 
-let player1Nickname;
-let player2Nickname;
-let player1Pro;
-let player2Pro;
+function playerInfo(playerNickname,playerPro){
+    const infoContainer = document.createElement("div");
+    const nickname = document.createElement("p")
+    nickname=playerNickname;
+    infoContainer.appendChild(playerPro)
+    infoContainer.appendChild(nickname)
+    return infoContainer
+  }
+
+
 onePlayerButton.addEventListener("click", () => {
   document.getElementById("nicknamePlayer2").value = "Computer";
   document.getElementById("player2img").style.pointerEvents = "none";
@@ -44,12 +59,6 @@ onePlayerButton.addEventListener("click", () => {
   logInContainer.style.display = "flex";
   backButton.style.display = "block";
   startButton.addEventListener("click", () => {
-    player1Nickname = document.getElementById("nicknamePlayer1").value;
-    player2Nickname = document.getElementById("nicknamePlayer2").value;
-    player1Pro = document.getElementById("player1img");
-    player2Pro = document.getElementById("player2img");
-    console.log(player1Pro);
-    
     if (
       testNickname(document.getElementById("nicknamePlayer1").value) &&
       testNickname(document.getElementById("nicknamePlayer1").value)
@@ -57,6 +66,7 @@ onePlayerButton.addEventListener("click", () => {
       startButton.style.display = "none";
       backButton.style.display = "none";
       logInContainer.style.display = "none";
+      
       document.getElementById("gameBoard").style.display = "block";
       document.getElementById("scoreText").style.display = "block";
       document.getElementById("buttonDiv").style.display = "flex";
@@ -256,10 +266,6 @@ start.appendChild(scoreDiv);
 start.appendChild(soundScore);
 start.appendChild(soundBounce);
 start.appendChild(buttonsDiv);
-function clearBoard() {
-  ctx.fillStyle = boardBackground;
-  ctx.fillRect(0, 0, gameWidth, gameHeight);
-}
 
 function gameStart() {
   createBall();
@@ -551,7 +557,6 @@ function resetGame() {
   clearInterval(intervalID);
   gameStart();
 }
-
 function drawBlackHole(x, y) {
   const gradient = ctx.createRadialGradient(x, y, 10, x, y, 150);
   gradient.addColorStop(0, "rgb(2, 32, 41)");
