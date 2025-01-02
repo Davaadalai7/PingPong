@@ -2,16 +2,6 @@ const startElement = document.getElementById("start");
 const startPage = document.createElement("div");
 startPage.id = "container";
 
-let logInPlayer1Div = logInPlayer1.container;
-let logInPlayer2Div = logInPlayer2.container;
-let player1Nickname;
-let player2Nickname;
-let player1Pro;
-let player2Pro;
-
-
-const logInContainer = document.createElement("div");
-logInContainer.className = "logInContainer";
 let logInPlayer1 = loginOpen(
   "defaultProfile.jpg",
   "nicknamePlayer1",
@@ -24,6 +14,16 @@ let logInPlayer2 = loginOpen(
   "nicknamePlayer2",
   "player2img"
 );
+
+let logInPlayer1Div = logInPlayer1.container;
+let logInPlayer2Div = logInPlayer2.container;
+let player1Nickname;
+let player2Nickname;
+let player1Pro;
+let player2Pro;
+
+const logInContainer = document.createElement("div");
+logInContainer.className = "logInContainer";
 
 logInContainer.appendChild(logInPlayer1Div);
 logInContainer.appendChild(logInPlayer2Div);
@@ -126,7 +126,6 @@ function editPro(imgId) {
     "profile3.webp",
     "profile4.jpg",
   ];
-  let changeSrc = document.getElementById(imgId);
   profileImg.forEach((el) => {
     const edited = imageChoices(el);
     editProfile.appendChild(edited);
@@ -136,7 +135,7 @@ function editPro(imgId) {
       logInContainer.style.display = "flex";
     });
   });
-  return { container: editProfile, newImg: document.getElementById(imgId).src };
+  return { container: editProfile};
 }
 function chosenImage(imageUrl, imgId) {
   const imagePro = document.createElement("img");
@@ -160,8 +159,7 @@ startButton.className = "playerChooseButton";
 startButton.innerText = "START";
 startButton.style.display = "none";
 
-startPage.appendChild(startButton);
-startPage.appendChild(backButton);
+
 
 function loginOpen(imageUrl, inputId, imgId) {
   const logIn = document.createElement("div");
@@ -190,6 +188,11 @@ function loginOpen(imageUrl, inputId, imgId) {
 }
 
 startPage.appendChild(logInContainer);
+const buttons = document.createElement("div");
+buttons.appendChild(startButton);
+buttons.appendChild(backButton);
+buttons.style.display = "flex"
+startPage.appendChild(buttons);
 
 function testNickname(input) {
   const testStr = /^[a-zA-Z0-9]+$/;
@@ -256,9 +259,9 @@ soundBounce.src = "hit.mp3";
 
 buttonsDiv.id = "buttonDiv";
 reset.innerHTML = "reset";
-reset.id = "resetBtn";
+reset.className = "playerChooseButton";
 refresh.innerHTML = "back";
-refresh.id = "resetBtn";
+refresh.className = "playerChooseButton";
 let ballTrail = [];
 
 start.appendChild(canvas);
