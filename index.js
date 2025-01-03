@@ -264,11 +264,13 @@ refresh.innerHTML = "back";
 refresh.className = "playerChooseButton";
 let ballTrail = [];
 
+const scoreButtonCont = document.createElement("div")
+scoreButtonCont.appendChild(scoreDiv)
+scoreButtonCont.appendChild(buttonsDiv)
 start.appendChild(canvas);
-start.appendChild(scoreDiv);
 start.appendChild(soundScore);
 start.appendChild(soundBounce);
-start.appendChild(buttonsDiv);
+start.appendChild(scoreButtonCont)
 
 function gameStart() {
   createBall();
