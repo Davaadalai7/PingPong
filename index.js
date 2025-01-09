@@ -8,7 +8,6 @@ let logInPlayer1 = loginOpen(
   "player1img"
 );
 
-
 let logInPlayer2 = loginOpen(
   "defaultProfile.jpg",
   "nicknamePlayer2",
@@ -32,7 +31,6 @@ const gameName = document.createElement("h1");
 gameName.innerText = "PONG";
 gameName.id = "gameName";
 
-startPage.appendChild(gameName);
 startElement.appendChild(startPage);
 
 const buttonContainer = document.createElement("div");
@@ -41,15 +39,14 @@ const onePlayerButton = document.createElement("button");
 onePlayerButton.className = "playerChooseButton";
 onePlayerButton.innerText = "one player";
 
-function playerInfo(playerNickname,playerPro){
-    const infoContainer = document.createElement("div");
-    const nickname = document.createElement("p")
-    nickname=playerNickname;
-    infoContainer.appendChild(playerPro)
-    infoContainer.appendChild(nickname)
-    return infoContainer
-  }
-
+function playerInfo(playerNickname, playerPro) {
+  const infoContainer = document.createElement("div");
+  const nickname = document.createElement("p");
+  nickname = playerNickname;
+  infoContainer.appendChild(playerPro);
+  infoContainer.appendChild(nickname);
+  return infoContainer;
+}
 
 onePlayerButton.addEventListener("click", () => {
   document.getElementById("nicknamePlayer2").value = "Computer";
@@ -61,15 +58,19 @@ onePlayerButton.addEventListener("click", () => {
   startButton.addEventListener("click", () => {
     if (
       testNickname(document.getElementById("nicknamePlayer1").value) &&
-      testNickname(document.getElementById("nicknamePlayer1").value)
+      testNickname(document.getElementById("nicknamePlayer2").value)
     ) {
+      player1Nickname = document.getElementById("nicknamePlayer1").value;
+      player2Nickname = document.getElementById("nicknamePlayer2").value;
+      player1Pro = document.getElementById("player1img");
+      player2Pro = document.getElementById("player2img");
       startButton.style.display = "none";
       backButton.style.display = "none";
       logInContainer.style.display = "none";
-      
+
       document.getElementById("gameBoard").style.display = "block";
-      document.getElementById("scoreText").style.display = "block";
-      document.getElementById("buttonDiv").style.display = "flex";
+      scoreDiv.style.display="block"
+      document.getElementById("scoreAndButtons").style.display = "flex";
       computer();
     }
   });
@@ -86,21 +87,20 @@ twoPlayerButton.addEventListener("click", () => {
   logInContainer.style.display = "flex";
   backButton.style.display = "block";
   startButton.addEventListener("click", () => {
-    player1Nickname = document.getElementById("nicknamePlayer1").value;
-    player2Nickname = document.getElementById("nicknamePlayer2").value;
-    player1Pro = document.getElementById("player1img");
-    player2Pro = document.getElementById("player2img");
-
     if (
       testNickname(document.getElementById("nicknamePlayer1").value) &&
-      testNickname(document.getElementById("nicknamePlayer1").value)
+      testNickname(document.getElementById("nicknamePlayer2").value)
     ) {
+      player1Nickname = document.getElementById("nicknamePlayer1").value;
+      player2Nickname = document.getElementById("nicknamePlayer2").value;
+      player1Pro = document.getElementById("player1img");
+      player2Pro = document.getElementById("player2img");
       startButton.style.display = "none";
       backButton.style.display = "none";
       logInContainer.style.display = "none";
       document.getElementById("gameBoard").style.display = "block";
-      document.getElementById("scoreText").style.display = "block";
-      document.getElementById("buttonDiv").style.display = "flex";
+      scoreDiv.style.display="block"
+      document.getElementById("scoreAndButtons").style.display = "flex";
       players2();
     }
   });
@@ -110,6 +110,7 @@ twoPlayerButton.addEventListener("click", () => {
 buttonContainer.appendChild(onePlayerButton);
 buttonContainer.appendChild(twoPlayerButton);
 
+startPage.appendChild(gameName);
 startPage.appendChild(buttonContainer);
 
 function imageChoices(imageUrl) {
@@ -135,7 +136,7 @@ function editPro(imgId) {
       logInContainer.style.display = "flex";
     });
   });
-  return { container: editProfile};
+  return { container: editProfile };
 }
 function chosenImage(imageUrl, imgId) {
   const imagePro = document.createElement("img");
@@ -159,8 +160,6 @@ startButton.className = "playerChooseButton";
 startButton.innerText = "START";
 startButton.style.display = "none";
 
-
-
 function loginOpen(imageUrl, inputId, imgId) {
   const logIn = document.createElement("div");
   logIn.className = "login";
@@ -173,7 +172,6 @@ function loginOpen(imageUrl, inputId, imgId) {
     const editProfile = editPro(imgId);
     editProfile.container.style.display = "flex";
     startPage.appendChild(editProfile.container);
-
   });
   const nickname = document.createElement("p");
   nickname.innerText = "Nickname:";
@@ -191,7 +189,7 @@ startPage.appendChild(logInContainer);
 const buttons = document.createElement("div");
 buttons.appendChild(startButton);
 buttons.appendChild(backButton);
-buttons.style.display = "flex"
+buttons.style.display = "flex";
 startPage.appendChild(buttons);
 
 function testNickname(input) {
@@ -200,8 +198,6 @@ function testNickname(input) {
     return true;
   } else return false;
 }
-
-
 
 const start = document.getElementById("start");
 const canvas = document.createElement("canvas");
@@ -264,13 +260,15 @@ refresh.innerHTML = "back";
 refresh.className = "playerChooseButton";
 let ballTrail = [];
 
-const scoreButtonCont = document.createElement("div")
-scoreButtonCont.appendChild(scoreDiv)
-scoreButtonCont.appendChild(buttonsDiv)
+const scoreButtonCont = document.createElement("div");
+scoreButtonCont.id="scoreAndButtons"
+scoreButtonCont.appendChild(scoreDiv);
+scoreButtonCont.appendChild(buttonsDiv);
 start.appendChild(canvas);
 start.appendChild(soundScore);
 start.appendChild(soundBounce);
-start.appendChild(scoreButtonCont)
+
+startPage.appendChild(scoreButtonCont);
 
 function gameStart() {
   createBall();
@@ -582,7 +580,7 @@ function playSound(soundId) {
 function changeDirectionMouse(event) {
   canvas.addEventListener("mousemove", (e) => {
     const mouseY = e.clientY;
-    paddle1.y = mouseY - 170 * stopBall;
+    paddle1.y = mouseY - 200 * stopBall;
   });
   setInterval(() => {
     if (ballY < paddle2.y + paddle2.height / 2) {

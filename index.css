@@ -36,12 +36,10 @@
   text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6),
     0 0 60px rgba(0, 255, 255, 0.5);
   margin: 20px 0;
-  position: absolute;
-  display: block;
+  display: none;
 }
 #buttonDiv{
   display: flex;
-  position: absolute;
   gap: 20px;
   top: 700px;
 }
@@ -83,4 +81,15 @@
     box-shadow: 0 0 20px #00FFFF, 0 0 30px #00FFFF; /* Stronger glow on hover */
     transform: scale(1.1); /* Slightly enlarge the button on hover */
 
+}
+#scoreAndButtons{
+
+  width: 300px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 300px;
+  gap: 100px;
+  z-index: 2;
 }
