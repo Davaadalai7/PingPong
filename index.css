@@ -83,13 +83,12 @@
 
 }
 #scoreAndButtons{
-
   width: 300px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
   top: 300px;
-  gap: 100px;
+  gap: 120px;
   z-index: 2;
 }

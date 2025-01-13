@@ -20,6 +20,10 @@ let player1Nickname;
 let player2Nickname;
 let player1Pro;
 let player2Pro;
+const player1=document.createElement("div")
+player1.className = "player1Info"
+const player2=document.createElement("div")
+player2.className = "player2Info"
 
 const logInContainer = document.createElement("div");
 logInContainer.className = "logInContainer";
@@ -41,10 +45,12 @@ onePlayerButton.innerText = "one player";
 
 function playerInfo(playerNickname, playerPro) {
   const infoContainer = document.createElement("div");
-  const nickname = document.createElement("p");
-  nickname = playerNickname;
-  infoContainer.appendChild(playerPro);
+  let nickname = document.createElement("p");
+  nickname.id = "gameName"
+  nickname.innerText = playerNickname;
   infoContainer.appendChild(nickname);
+  playerPro.setAttribute("title","profile image")
+  infoContainer.appendChild(playerPro)
   return infoContainer;
 }
 
@@ -62,8 +68,12 @@ onePlayerButton.addEventListener("click", () => {
     ) {
       player1Nickname = document.getElementById("nicknamePlayer1").value;
       player2Nickname = document.getElementById("nicknamePlayer2").value;
-      player1Pro = document.getElementById("player1img");
-      player2Pro = document.getElementById("player2img");
+     // player1Pro = document.getElementById("player1img");
+//       player2Pro = document.getElementById("player2img");
+// const player1=playerInfo(player1Nickname,player1Pro)
+// const player2=playerInfo(player2Nickname,player2Pro)
+
+
       startButton.style.display = "none";
       backButton.style.display = "none";
       logInContainer.style.display = "none";
@@ -72,6 +82,7 @@ onePlayerButton.addEventListener("click", () => {
       scoreDiv.style.display="block"
       document.getElementById("scoreAndButtons").style.display = "flex";
       computer();
+      console.log(player1Pro);
     }
   });
   startButton.style.display = "block";
@@ -93,8 +104,8 @@ twoPlayerButton.addEventListener("click", () => {
     ) {
       player1Nickname = document.getElementById("nicknamePlayer1").value;
       player2Nickname = document.getElementById("nicknamePlayer2").value;
-      player1Pro = document.getElementById("player1img");
-      player2Pro = document.getElementById("player2img");
+      // player1Pro = document.getElementById("player1img");
+      // player2Pro = document.getElementById("player2img");
       startButton.style.display = "none";
       backButton.style.display = "none";
       logInContainer.style.display = "none";
@@ -102,6 +113,8 @@ twoPlayerButton.addEventListener("click", () => {
       scoreDiv.style.display="block"
       document.getElementById("scoreAndButtons").style.display = "flex";
       players2();
+      console.log(player1Pro);
+      
     }
   });
   startButton.style.display = "block";
@@ -109,9 +122,6 @@ twoPlayerButton.addEventListener("click", () => {
 
 buttonContainer.appendChild(onePlayerButton);
 buttonContainer.appendChild(twoPlayerButton);
-
-startPage.appendChild(gameName);
-startPage.appendChild(buttonContainer);
 
 function imageChoices(imageUrl) {
   const img = document.createElement("img");
@@ -185,12 +195,10 @@ function loginOpen(imageUrl, inputId, imgId) {
   return { container: logIn, image: profileChosen.src };
 }
 
-startPage.appendChild(logInContainer);
 const buttons = document.createElement("div");
 buttons.appendChild(startButton);
 buttons.appendChild(backButton);
 buttons.style.display = "flex";
-startPage.appendChild(buttons);
 
 function testNickname(input) {
   const testStr = /^[a-zA-Z0-9]+$/;
@@ -264,10 +272,15 @@ const scoreButtonCont = document.createElement("div");
 scoreButtonCont.id="scoreAndButtons"
 scoreButtonCont.appendChild(scoreDiv);
 scoreButtonCont.appendChild(buttonsDiv);
-start.appendChild(canvas);
+
+
 start.appendChild(soundScore);
 start.appendChild(soundBounce);
-
+startPage.appendChild(gameName);
+startPage.appendChild(canvas)
+startPage.appendChild(buttonContainer);
+startPage.appendChild(logInContainer);
+startPage.appendChild(buttons);
 startPage.appendChild(scoreButtonCont);
 
 function gameStart() {
@@ -602,8 +615,11 @@ function bot() {
   requestAnimationFrame(updatePaddlePosition);
 }
 function computer() {
+  buttonsDiv.appendChild(player1)
   buttonsDiv.appendChild(refresh);
   buttonsDiv.appendChild(reset);
+  buttonsDiv.appendChild(player2)
+
   computerButtom.id = "hid";
   player1VSplayer2.id = "hid";
   bot();
